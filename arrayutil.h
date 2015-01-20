@@ -10,14 +10,14 @@ struct rect {
 };
 
 typedef struct rect rectangle;
-typedef struct utilArray arrayutil;
+typedef struct utilArray ArrayUtil;
 
-int areEqual(arrayutil,arrayutil);
-arrayutil create(int typeSize,int length);
-arrayutil resize(arrayutil,int);
-int findIndex(arrayutil,void*);
-void* findFirst(arrayutil,int (*f)(void*), void*);
+int areEqual(ArrayUtil,ArrayUtil);
+ArrayUtil create(int typeSize,int length);
+ArrayUtil resize(ArrayUtil,int);
+int findIndex(ArrayUtil,void*);
+void* findFirst(ArrayUtil,int (*f)(void*), void*);
 int isEven(void*);
-void* findLast(arrayutil,int (*f)(void*),void*);
-int count(arrayutil,int (*f)(void*,void*), void*);
-int filter(arrayutil, int (*f)(void*,void*), void*, void**, int);
+void* findLast(ArrayUtil,int (*f)(void*),void*);
+int count(ArrayUtil,int (*f)(void*,void*), void*);
+int filter(ArrayUtil, int (*f)(void*,void*), void*, void**, int);

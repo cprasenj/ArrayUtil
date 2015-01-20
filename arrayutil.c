@@ -5,7 +5,7 @@
 int isEven(void* a){
 	return (*((int*)a)%2==0) ? 1 : 0;
 }
-int areEqual(arrayutil arr1,arrayutil arr2) {
+int areEqual(ArrayUtil arr1,ArrayUtil arr2) {
 	int i;
 	if(arr1.length == arr2.length && arr1.typeSize == arr2.typeSize) {
 		
@@ -19,17 +19,17 @@ int areEqual(arrayutil arr1,arrayutil arr2) {
 	return 0;
 }
 
-arrayutil create(int typeSize,int length) {
-	arrayutil arr;
+ArrayUtil create(int typeSize,int length) {
+	ArrayUtil arr;
 	arr.length = length;
 	arr.typeSize = typeSize;
 	arr.base = calloc(length,typeSize);
 	return arr;
 }
 
-arrayutil resize(arrayutil util,int length) {
+ArrayUtil resize(ArrayUtil util,int length) {
 	int i;
-	arrayutil arr;
+	ArrayUtil arr;
 	if(util.length == length)return util;
 	arr.length = length;
 	arr.typeSize = util.typeSize;
@@ -40,7 +40,7 @@ arrayutil resize(arrayutil util,int length) {
 	return arr;
 }
 
-int findIndex(arrayutil util,void* element){
+int findIndex(ArrayUtil util,void* element){
 	int i,j,len = sizeof(element);
 	for(i=0;i<util.length*util.typeSize;i++){
 		if(len == sizeof(int)){
@@ -59,14 +59,14 @@ int findIndex(arrayutil util,void* element){
 	return -1;
 }
 
-void dispose(arrayutil util) {
+void dispose(ArrayUtil util) {
 	void *a;
 	free(util.base);
 	util.length = 0;
 	util.base = a;
 }
 
-void* findFirst(arrayutil util,int (*f)(void* a), void* hint) {
+void* findFirst(ArrayUtil util,int (*f)(void* a), void* hint) {
 	int i,res,tmp;
 	void* result;
 	for(i=0;i<util.length*util.typeSize;(i+=util.typeSize)){
@@ -80,7 +80,7 @@ void* findFirst(arrayutil util,int (*f)(void* a), void* hint) {
 	return NULL;
 }
 
-void* findLast(arrayutil util,int (*f)(void* p), void* hint) {
+void* findLast(ArrayUtil util,int (*f)(void* p), void* hint) {
 	int i,res,tmp;
 	void* result;
 	for(i=util.length*util.typeSize-util.typeSize;i>0;(i-=util.typeSize)){
@@ -94,7 +94,7 @@ void* findLast(arrayutil util,int (*f)(void* p), void* hint) {
 	return NULL;
 }
 
-int count(arrayutil util, int (*f)(void* a,void* b), void* hint){
+int count(ArrayUtil util, int (*f)(void* a,void* b), void* hint){
 	int i,res,tmp,count = 0;
 	for(i=0;i<util.length*util.typeSize;(i+=util.typeSize)){
 		res = (*f)(&((char*)util.base)[i],hint);
@@ -105,7 +105,14 @@ int count(arrayutil util, int (*f)(void* a,void* b), void* hint){
 	return (count==0) ? -1 : count;	
 }
 
-int filter(arrayutil util, int (*f)(void*,void*), void* hint, void** destination, int maxItems ){
-
+int filter(ArrayUtil util, int (*f)(void*,void*), void* hint, void** destination, int maxItems ){
+	int i,res,tmp,count = 0;
+	for(i=0;i<util.length*util.typeSize;(i+=util.typeSize)){
+		res = (*f)(&((char*)util.base)[i],hint);
+		if(res==1){
+			count++;
+		}
+	}
+	return (count==0) ? -1 : count;
 }
 

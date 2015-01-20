@@ -2,9 +2,9 @@
 #include "arrayutil.h"
 #include <stdlib.h>
 
-void test_areEqual_returns_0_if_array_lengths_are_different() {
+void test_areEqual_returns_negative_if_array_lengths_are_different() {
 	int expected = 0,actual;
-	arrayutil a,b;
+	ArrayUtil a,b;
 	a.length = 5;
 	b.length = 6;
 	actual = areEqual(a,b);
@@ -13,7 +13,7 @@ void test_areEqual_returns_0_if_array_lengths_are_different() {
 
 void test_areEqual_returns_1_if_array_lengths_are_same_and_values_are_same() {
 	int *arr1,*arr2;
-	arrayutil a,b;
+	ArrayUtil a,b;
 	int expected = 1,actual;
 	a.length = 1;
 	a.typeSize = sizeof(int);
@@ -31,7 +31,7 @@ void test_areEqual_returns_1_if_array_lengths_are_same_and_values_are_same() {
 	
 void test_areEqual_returns_0_if_array_lengths_are_same_and_values_are_different() {
 	int *arr1,*arr2;
-	arrayutil a,b;
+	ArrayUtil a,b;
 	int expected = 0,actual;
 	a.length = 1;
 	a.typeSize = sizeof(int);
@@ -49,7 +49,7 @@ void test_areEqual_returns_0_if_array_lengths_are_same_and_values_are_different(
 
 void test_isEqual_returns_1_if_array_lengths_are_same_and_values_are_same_for_char() {
 	char *arr1,*arr2;
-	arrayutil a,b;
+	ArrayUtil a,b;
 	int expected = 0,actual;
 	a.length = 1;
 	a.typeSize = sizeof(int);
@@ -66,7 +66,7 @@ void test_isEqual_returns_1_if_array_lengths_are_same_and_values_are_same_for_ch
 }
 
 void test_creates_returns_1_if_array_lengths_are_same_and_values_are_same() {
-	arrayutil a,b;
+	ArrayUtil a,b;
 	int expected = 1,actual;
 	a = create(sizeof(int),2);
 	b = create(sizeof(int),2);
@@ -75,7 +75,7 @@ void test_creates_returns_1_if_array_lengths_are_same_and_values_are_same() {
 }
 
 void test_resize_returns_1_if_array_lengths_are_same_and_values_are_same() {
-	arrayutil a,b;
+	ArrayUtil a,b;
 	int expected = 1,actual;
 	a.length = 5;
 	a.typeSize = sizeof(int);
@@ -88,7 +88,7 @@ void test_resize_returns_1_if_array_lengths_are_same_and_values_are_same() {
 }
 
 void test_indexof_returns_negative_1_if_element_if_element_not_found(){
-	arrayutil a;
+	ArrayUtil a;
 	int b,x;
 	int expected = 1,actual;
 	a = create(sizeof(int),5);
@@ -101,7 +101,7 @@ void test_indexof_returns_negative_1_if_element_if_element_not_found(){
 }
 
 void test_indexof_returns_0_if_element_if_element_is_in_0_position(){
-	arrayutil a;
+	ArrayUtil a;
 	int b,x;
 	int expected = 1,actual;
 	a = create(sizeof(int),5);
@@ -120,7 +120,7 @@ void test_indexof_returns_0_if_element_if_element_is_in_0_position(){
 }
 
 void test_indexof_returns_0_if_float_element_is_in_0_position(){
-	arrayutil a;
+	ArrayUtil a;
 	int b;
 	float x;
 	int expected = 1,actual;
@@ -140,7 +140,7 @@ void test_indexof_returns_0_if_float_element_is_in_0_position(){
 }
 
 void test_indexof_returns_0_if_char_element_is_in_0_position(){
-	arrayutil a;
+	ArrayUtil a;
 	int b;
 	char x;
 	int expected = 1,actual;
@@ -160,7 +160,7 @@ void test_indexof_returns_0_if_char_element_is_in_0_position(){
 }
 
 void test_findFirst_returns_null_if_there_is_no_match(){
-	arrayutil a;
+	ArrayUtil a;
 	int x = 2;
 	a = create(sizeof(int),1);
 	((int*)a.base)[0]  = 9;
@@ -168,7 +168,7 @@ void test_findFirst_returns_null_if_there_is_no_match(){
 }
 
 void test_findFirst_returns_position_if_there_is_match_found(){
-	arrayutil a;
+	ArrayUtil a;
 	int x = 2;
 	a = create(sizeof(int),5);
 	((int*)a.base)[0] = 4;
@@ -176,7 +176,7 @@ void test_findFirst_returns_position_if_there_is_match_found(){
 }
 
 void test_findList_returns_positions_if_there_is_match_found(){
-	arrayutil a;
+	ArrayUtil a;
 	int x = 2;
 	a = create(sizeof(int),5);
 	((int*)a.base)[0] = 4;
@@ -188,7 +188,7 @@ void test_findList_returns_positions_if_there_is_match_found(){
 }
 
 void test_findList_returns_count_of_match_there_is_match_found(){
-	arrayutil a;
+	ArrayUtil a;
 	int x = 2;
 	a = create(sizeof(int),5);
 	((int*)a.base)[0] = 4;
@@ -200,7 +200,7 @@ void test_findList_returns_count_of_match_there_is_match_found(){
 }
 
 void test_findList_returns_negative_if_there_is_no_match_found(){
-	arrayutil a;
+	ArrayUtil a;
 	int x = 2;
 	a = create(sizeof(int),5);
 	((int*)a.base)[0] = 11;
