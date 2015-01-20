@@ -1,9 +1,14 @@
 #include <stdio.h>
 #include "arrayutil.h"
 #include <ctype.h>
+
+int isEven(void* a){
+	return (*((int*)a)%2==0) ? 1 : 0;
+}
 int areEqual(arrayutil arr1,arrayutil arr2) {
 	int i;
 	if(arr1.length == arr2.length && arr1.typeSize == arr2.typeSize) {
+		
 		for(i=0;i<arr1.length*arr1.typeSize;i++) {
 			if(((char*)arr1.base)[i] != (((char*)arr2.base)[i])) {
 				return 0;
@@ -59,5 +64,48 @@ void dispose(arrayutil util) {
 	free(util.base);
 	util.length = 0;
 	util.base = a;
+}
+
+void* findFirst(arrayutil util,int (*f)(void* a), void* hint) {
+	int i,res,tmp;
+	void* result;
+	for(i=0;i<util.length*util.typeSize;(i+=util.typeSize)){
+		res = (*f)(&((char*)util.base)[i]);
+		if(res==1){
+			tmp = ((char*)util.base)[i];
+			result = &tmp;
+			return result;
+		}
+	}
+	return NULL;
+}
+
+void* findLast(arrayutil util,int (*f)(void* p), void* hint) {
+	int i,res,tmp;
+	void* result;
+	for(i=util.length*util.typeSize-util.typeSize;i>0;(i-=util.typeSize)){
+		res = (*f)(&((char*)util.base)[i]);
+		if(res==1){
+			tmp = ((char*)util.base)[i];
+			result = &tmp;
+			return result;
+		}
+	}
+	return NULL;
+}
+
+int count(arrayutil util, int (*f)(void* a,void* b), void* hint){
+	int i,res,tmp,count = 0;
+	for(i=0;i<util.length*util.typeSize;(i+=util.typeSize)){
+		res = (*f)(&((char*)util.base)[i],hint);
+		if(res==1){
+			count++;
+		}
+	}
+	return (count==0) ? -1 : count;	
+}
+
+int filter(arrayutil util, int (*f)(void*,void*), void* hint, void** destination, int maxItems ){
+
 }
 

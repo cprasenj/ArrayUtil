@@ -2,7 +2,7 @@
 #include "arrayutil.h"
 #include <stdlib.h>
 
-void test_isEqual_returns_0_if_array_lengths_are_different() {
+void test_areEqual_returns_0_if_array_lengths_are_different() {
 	int expected = 0,actual;
 	arrayutil a,b;
 	a.length = 5;
@@ -11,7 +11,7 @@ void test_isEqual_returns_0_if_array_lengths_are_different() {
 	assertEqual(expected,actual);
 }
 
-void test_isEqual_returns_1_if_array_lengths_are_same_and_values_are_same() {
+void test_areEqual_returns_1_if_array_lengths_are_same_and_values_are_same() {
 	int *arr1,*arr2;
 	arrayutil a,b;
 	int expected = 1,actual;
@@ -29,7 +29,7 @@ void test_isEqual_returns_1_if_array_lengths_are_same_and_values_are_same() {
 	assertEqual(expected,actual);
 }
 	
-void test_isEqual_returns_0_if_array_lengths_are_same_and_values_are_different() {
+void test_areEqual_returns_0_if_array_lengths_are_same_and_values_are_different() {
 	int *arr1,*arr2;
 	arrayutil a,b;
 	int expected = 0,actual;
@@ -157,4 +157,56 @@ void test_indexof_returns_0_if_char_element_is_in_0_position(){
 	x = 'c';
 	b = findIndex(a,&x);
 	assertEqual(b, 2);	
+}
+
+void test_findFirst_returns_null_if_there_is_no_match(){
+	arrayutil a;
+	int x = 2;
+	a = create(sizeof(int),1);
+	((int*)a.base)[0]  = 9;
+	assertEqual(findFirst(a,isEven,&x),NULL); 
+}
+
+void test_findFirst_returns_position_if_there_is_match_found(){
+	arrayutil a;
+	int x = 2;
+	a = create(sizeof(int),5);
+	((int*)a.base)[0] = 4;
+	assertEqual(*((int*)findFirst(a,isEven,&x)),4); 
+}
+
+void test_findList_returns_positions_if_there_is_match_found(){
+	arrayutil a;
+	int x = 2;
+	a = create(sizeof(int),5);
+	((int*)a.base)[0] = 4;
+	((int*)a.base)[1] = 3;
+	((int*)a.base)[2] = 6;
+	((int*)a.base)[3] = 8;
+	((int*)a.base)[4] = 7;
+	assertEqual(*((int*)findLast(a,isEven,&x)),8); 
+}
+
+void test_findList_returns_count_of_match_there_is_match_found(){
+	arrayutil a;
+	int x = 2;
+	a = create(sizeof(int),5);
+	((int*)a.base)[0] = 4;
+	((int*)a.base)[1] = 3;
+	((int*)a.base)[2] = 6;
+	((int*)a.base)[3] = 8;
+	((int*)a.base)[4] = 7;
+	assertEqual(((int*)count(a,isEven,&x)),3); 
+}
+
+void test_findList_returns_negative_if_there_is_no_match_found(){
+	arrayutil a;
+	int x = 2;
+	a = create(sizeof(int),5);
+	((int*)a.base)[0] = 11;
+	((int*)a.base)[1] = 3;
+	((int*)a.base)[2] = 9;
+	((int*)a.base)[3] = 421;
+	((int*)a.base)[4] = 7;
+	assertEqual(((int*)count(a,isEven,&x)),-1); 
 }
