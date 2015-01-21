@@ -41,3 +41,4 @@ void forEach(ArrayUtil, OperationFunc*, void*);
 void intAddOperation(void*,void*);
 void* reduce(ArrayUtil, ReducerFunc*, void*,void*);
 void* addReducerFunc(void*,void*,void*);
+int isUpperCase(void*,void*);

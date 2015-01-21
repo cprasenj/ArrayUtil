@@ -6,8 +6,9 @@ int isEven(void* a){
 	return (*((int*)a)%2==0) ? 1 : 0;
 }
 
-int isDivisible(void* a,void *b){
-	return (*((int*)a)%*((int*)b) == 0) ? 1 : 0;
+
+int isUpperCase(void* a,void *b){
+	return (*((char*)a) >= 'A' && *((char*)a) <= 'Z') ? 1 : 0;
 }
 
 int areEqual(ArrayUtil arr1,ArrayUtil arr2) {
@@ -41,15 +42,15 @@ ArrayUtil resize(ArrayUtil util,int length) {
 	return arr;
 }
 
-int findIndex(ArrayUtil util,void* element){
+int findIndex(ArrayUtil util,void* element){//not working for double
 	int i,j,len = sizeof(element);
 	for(i=0;i<util.length*util.typeSize;i++){
 		if(len == sizeof(int)){
 			if(((int*)util.base)[i] == *((int*)element))
 				return i;	
 		}
-		if(len == sizeof(float)){
-			if(((float*)util.base)[i] == *((float*)element))
+		if(len == sizeof(double)){
+			if(((double*)util.base)[i] == *((double*)element))
 				return i;	
 		}
 	}
@@ -96,7 +97,7 @@ void* findLast(ArrayUtil util,MatchFunc* f, void* hint) {
 }
 
 int count(ArrayUtil util, MatchFunc* f, void* hint){
-	int i,res,tmp,count = 0;
+	int i,res,count = 0;
 	for(i=0;i<util.length*util.typeSize;(i+=util.typeSize)){
 		res = f(&((char*)util.base)[i],hint);
 		if(res==1){
@@ -106,13 +107,23 @@ int count(ArrayUtil util, MatchFunc* f, void* hint){
 	return (count==0) ? -1 : count;	
 }
 
+int isDivisible(void* a,void *b){
+	printf("%d\n",((int*)a)[0]);
+	return (*((int*)a)%*((int*)b) == 0) ? 1 : 0;
+}
+
 int filter(ArrayUtil util, MatchFunc* f, void* hint, void** destination, int maxItems ){
 	int i,res,tmp,count = 0,size = 0;
 	*destination = malloc(maxItems*util.typeSize);
-	for(i=0;i<util.length*util.typeSize;i++){
-		res = f(&((int*)util.base)[i],hint);
+	for(i=0;i<util.length*util.typeSize;i+=util.typeSize){
+		res = f(&(util.base)[i],hint);
 		if(res==1){
-			((int *)(*destination))[size] = ((int*)util.base)[i];
+			if(util.typeSize == sizeof(char)) {
+				((char*)(*destination))[size] = ((char*)util.base)[i];
+			}
+			else{
+				((int*)(*destination))[size] = ((int*)util.base)[i];
+			}
 			count++;
 			size ++;
 			if(count == maxItems) return count;

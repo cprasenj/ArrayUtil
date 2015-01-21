@@ -201,18 +201,6 @@ void test_indexof_returns_negative_1_if_element_if_element_not_found(){
 	assertEqual(b, -1);	
 }
 
-void test_indexof_returns_negative_1_if_the_given_element_is_not_found_in_integer_array(){
-	ArrayUtil a = {(int[]){1,2,3,0,5},sizeof(int),5};
-	int x = 9;
-	assertEqual(findIndex(a,&x),-1);
-}
-
-void test_indexof_returns_position_of_element_if_the_given_element_is_found_in_integer_array(){
-	ArrayUtil a = {(int[]){1,2,3,0,5},sizeof(int),5};
-	int x = 3;
-	assertEqual(findIndex(a,&x),2);
-}
-
 void test_indexof_returns_0_if_element_if_element_is_in_0_position(){
 	ArrayUtil a;
 	int b,x;
@@ -272,6 +260,62 @@ void test_indexof_returns_0_if_char_element_is_in_0_position(){
 	assertEqual(b, 2);	
 }
 
+void test_indexof_returns_negative_1_if_the_given_element_is_not_found_in_integer_array(){
+	ArrayUtil a = {(int[]){1,2,3,0,5},sizeof(int),5};
+	int x = 9;
+	assertEqual(findIndex(a,&x),-1);
+}
+
+void test_indexof_returns_position_of_element_if_the_given_element_is_found_in_integer_array(){
+	ArrayUtil a = {(int[]){1,2,3,0,5},sizeof(int),5};
+	int x = 3;
+	assertEqual(findIndex(a,&x),2);
+}
+
+void test_indexof_returns_position_of_element_if_the_given_element_is_found_in_double_array(){
+	ArrayUtil a = {(double[]){1.0,2.0,3.0,0.0,5.0},sizeof(double),5};
+	double x = 1.0;
+	assertEqual(findIndex(a,&x),0);
+}
+
+void test_indexof_returns_position_of_element_if_the_given_element_is_found_in_float_array(){
+	ArrayUtil a = {(float[]){1.4,2.4,3.4,0.4,5.4},sizeof(float),5};
+	float x = 3.4;
+	assertEqual(findIndex(a,&x),2);
+}
+
+void test_indexof_returns_negative_1_if_the_given_element_is_not_found_in_character_array(){
+	ArrayUtil a = {(char[]){'1','2','3','0','5'},sizeof(char),5};
+	char x = '9';
+	assertEqual(findIndex(a,&x),-1);
+}
+
+void test_indexof_returns_position_of_element_if_the_given_element_is_found_in_character_array(){
+	ArrayUtil a = {(char[]){'1','2','3','0','5'},sizeof(char),5};
+	char x = '3';
+	assertEqual(findIndex(a,&x),2);
+}
+
+void test_indexof_returns_position_of_element_if_the_given_element_is_found_in_special_character_array(){
+	ArrayUtil a = {(char[]){'@','$','&','!','*'},sizeof(char),5};
+	char x = '&';
+	assertEqual(findIndex(a,&x),2);
+}
+
+void test_indexof_returns_position_of_element_if_the_given_element_is_found_in_string_array(){
+	ArrayUtil a = {(string[]){"prasenjit","Buddha","Radhe","Ananthu","Herrrr"},sizeof(string),5};
+	string x = "Herrrr";
+	assertEqual(findIndex(a,&x),4);
+}
+
+void test_indexof_returns_position_of_element_if_the_given_element_is_found_in_special_string_array(){
+	ArrayUtil a = {(string[]){"prasenjit&&","Buddha!!","Radhe**","Ananthu##","Herrrr__!"},sizeof(string),5};
+	string x = "Herrrr__!";
+	assertEqual(findIndex(a,&x),4);
+}
+
+//=============================================================================
+
 void test_findFirst_returns_null_if_there_is_no_match(){
 	ArrayUtil a;
 	int x = 2;
@@ -288,7 +332,28 @@ void test_findFirst_returns_position_if_there_is_match_found(){
 	assertEqual(*((int*)findFirst(a,isEven,&x)),4); 
 }
 
-void test_findList_returns_positions_if_there_is_match_found(){
+void test_findFirst_returns_null_if_there_is_no_match_in_integer_array(){
+	ArrayUtil a = {(int[]){1,3,5,7,9},sizeof(int),5};
+	int x = 2;
+	assertEqual(findFirst(a,isEven,&x),NULL);
+}
+
+
+void test_findFirst_returns_the_first_element_if_there_is_match_in_integer_array(){
+	ArrayUtil a = {(int[]){1,3,5,8,10},sizeof(int),5};
+	int x = 2;
+	assertEqual(*((int*)findFirst(a,isEven,&x)),8);
+}
+
+void test_findFirst_returns_the_first_element_if_there_is_match_in_character_array(){
+	ArrayUtil a = {(char[]){'a','b','C','D','e'},sizeof(char),5};
+	int x = 'S';
+	assertEqual(*((char*)findFirst(a,isUpperCase,&x)),'C');
+}
+
+//===================================================================================
+
+void test_findLast_returns_positions_if_there_is_match_found(){
 	ArrayUtil a;
 	int x = 2;
 	a = create(sizeof(int),5);
@@ -300,7 +365,28 @@ void test_findList_returns_positions_if_there_is_match_found(){
 	assertEqual(*((int*)findLast(a,isEven,&x)),8); 
 }
 
-void test_findList_returns_count_of_match_there_is_match_found(){
+void test_findLast_returns_null_if_there_is_no_match_in_integer_array(){
+	ArrayUtil a = {(int[]){1,3,5,7,9},sizeof(int),5};
+	int x = 2;
+	assertEqual(findLast(a,isEven,&x),NULL);
+}
+
+
+void test_findLast_returns_the_last_element_if_there_is_match_in_integer_array(){
+	ArrayUtil a = {(int[]){1,3,5,8,10},sizeof(int),5};
+	int x = 2;
+	assertEqual(*((int*)findLast(a,isEven,&x)),10);
+}
+
+void test_findLast_returns_the_last_element_if_there_is_match_in_character_array(){
+	ArrayUtil a = {(char[]){'a','b','C','D','e'},sizeof(char),5};
+	int x = 'D';
+	assertEqual(*((char*)findLast(a,isUpperCase,&x)),'D');
+}
+
+//====================================================================================
+
+void test_count_returns_count_of_match_there_is_match_found(){
 	ArrayUtil a;
 	int x = 2;
 	a = create(sizeof(int),5);
@@ -312,7 +398,7 @@ void test_findList_returns_count_of_match_there_is_match_found(){
 	assertEqual(((int*)count(a,isEven,&x)),3); 
 }
 
-void test_findList_returns_negative_if_there_is_no_match_found(){
+void test_count_returns_negative_if_there_is_no_match_found(){
 	ArrayUtil a;
 	int x = 2;
 	a = create(sizeof(int),5);
@@ -323,23 +409,62 @@ void test_findList_returns_negative_if_there_is_no_match_found(){
 	((int*)a.base)[4] = 7;
 	assertEqual(((int*)count(a,isEven,&x)),-1); 
 }
+void test_count_returns_count_of_match_there_is_match_found_in_integer_array() {
+	ArrayUtil a = {(int[]){2,4,6,8,10},sizeof(int),5};
+	int x = 2;
+	assertEqual(((int*)count(a,isEven,&x)),5);
+}
 
-void test_filter_gives_2_4_for_1_2_3_4_5(){
-	ArrayUtil util = create(sizeof(int),5);
-	int *arr,i,result,hint = 2,*lIst;
+void test_count_returns_negative_of_match_there_is_match_found_in_integer_array() {
+	ArrayUtil a = {(int[]){1,3,5,7,9},sizeof(int),5};
+	int x = 2;
+	assertEqual(((int*)count(a,isEven,&x)),-1);
+}
+
+void test_count_returns_number_of_match_found_if_there_is_match_in_character_array(){
+	ArrayUtil a = {(char[]){'a','b','C','D','e'},sizeof(char),5};
+	int x = 'D';
+	assertEqual(((char*)count(a,isUpperCase,&x)),2);
+}
+
+void test_count_returns_negative_if_there_is_no_match_in_character_array(){
+	ArrayUtil a = {(char[]){'a','b','c','d','e'},sizeof(char),5};
+	int x = 'D';
+	assertEqual(((char*)count(a,isUpperCase,&x)),-1);
+}
+
+//=====================================================================================
+
+// void test_filter_gives_2_4_for_1_2_3_4_5(){
+// 	ArrayUtil util = create(sizeof(int),5);
+// 	int *arr,i,result,hint = 2,*lIst;
+// 	void* list;
+// 	arr = (int*)util.base;
+// 	for(i=0;i<5;i++){
+// 		arr[i] = i+1;
+// 	}
+// 	result = filter(util, isDivisible,&hint,&list,2);
+// 	lIst = (int*)list;
+// 	assert(result==2);
+// 	assertEqual(lIst[0],2);
+// 	assertEqual(lIst[1],4);
+// 	free(list); 
+// }
+
+void test_filter_gives_D_E_for_a_b_c_D_E() {
+	ArrayUtil a = {(char[]){'a','b','c','D','E'},sizeof(char),5};
+	char *result,hint = 'a',*lIst;
 	void* list;
-	arr = (int*)util.base;
-	for(i=0;i<5;i++){
-		arr[i] = i+1;
-	}
-	result = filter(util, isDivisible,&hint,&list,2);
-	lIst = (int*)list;
-	assert(result==2);
-	assertEqual(lIst[0],2);
-	assertEqual(lIst[1],4);
+	int count;
+	count =  filter(a,isUpperCase,&hint,&list,2);
+	lIst = (char*)list;
+	assert(count==2);
+	assertEqual(lIst[0],'D');
+	assertEqual(lIst[1],'E');
 	free(list); 
 }
 
+//===========================================================================================
 void test_map_gives_2_3_4_5_6_for_1_2_3_4_5(){
 	ArrayUtil src = create(sizeof(int),5),dest = create(sizeof(int),5);
 	int *arr,i,hint = 1,*list;
