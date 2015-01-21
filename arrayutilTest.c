@@ -210,3 +210,76 @@ void test_findList_returns_negative_if_there_is_no_match_found(){
 	((int*)a.base)[4] = 7;
 	assertEqual(((int*)count(a,isEven,&x)),-1); 
 }
+
+void test_filter_gives_2_4_for_1_2_3_4_5(){
+	ArrayUtil util = create(sizeof(int),5);
+	int *arr,i,result,hint = 2,*lIst;
+	void* list;
+	arr = (int*)util.base;
+	for(i=0;i<5;i++){
+		arr[i] = i+1;
+	}
+	result = filter(util, isDivisible,&hint,&list,2);
+	lIst = (int*)list;
+	assert(result==2);
+	assertEqual(lIst[0],2);
+	assertEqual(lIst[1],4);
+	free(list); 
+}
+
+void test_map_gives_2_3_4_5_6_for_1_2_3_4_5(){
+	ArrayUtil src = create(sizeof(int),5),dest = create(sizeof(int),5);
+	int *arr,i,hint = 1,*list;
+	arr = (int*)src.base;
+	for(i=0;i<5;i++){
+		arr[i] = i+1;
+	}
+	list = ((int*)dest.base);
+	map(src,dest,intConvertFunc,&hint);
+	assertEqual(list[0],2);
+	assertEqual(list[1],3);
+	assertEqual(list[2],4);
+	assertEqual(list[3],5);
+	assertEqual(list[4],6);
+	free(list); 
+	dispose(src);
+}
+
+void test_forEach_gives_2_3_4_5_6_for_1_2_3_4_5_in_same_array(){
+	ArrayUtil src = create(sizeof(int),5);
+	int *arr,i,hint = 1,*list;
+	arr = (int*)src.base;
+	for(i=0;i<5;i++){
+		arr[i] = i+1;
+	}
+	list = ((int*)src.base);
+	forEach(src,intAddOperation,&hint);
+	assertEqual(list[0],2);
+	assertEqual(list[1],3);
+	assertEqual(list[2],4);
+	assertEqual(list[3],5);
+	assertEqual(list[4],6);
+	free(list); 
+	dispose(src);
+}
+
+void test_reduce_gives_20_for_1_2_3_4_5_in_same_array(){
+	ArrayUtil src = create(sizeof(int),5);
+	int *arr,i,hint = 1,*list,initval = 0;
+	void *result;
+	arr = (int*)src.base;
+	for(i=0;i<5;i++){
+		arr[i] = i+1;
+	}
+	result = reduce(src,addReducerFunc,&hint,&initval);
+	assertEqual(*((int*)result),20);
+	dispose(src);
+}
+
+
+
+
+
+
+
+
