@@ -11,24 +11,6 @@ void test_areEqual_returns_negative_if_array_lengths_are_different() {
 	assertEqual(expected,actual);
 }
 
-void test_areEqual_returns_1_if_array_lengths_are_same_and_values_are_same() {
-	int *arr1,*arr2;
-	ArrayUtil a,b;
-	int expected = 1,actual;
-	a.length = 1;
-	a.typeSize = sizeof(int);
-	b.length = 1;
-	b.typeSize = sizeof(int);
-	arr1 = (int *)malloc(sizeof(int)*a.length);
-	arr1[0] = 7;
-	a.base = arr1;
-	arr2 = (int *)malloc(sizeof(int)*b.length);
-	arr2[0] = 7;
-	b.base = arr2;
-	actual = areEqual(a,b);
-	assertEqual(expected,actual);
-}
-	
 void test_areEqual_returns_0_if_array_lengths_are_same_and_values_are_different() {
 	int *arr1,*arr2;
 	ArrayUtil a,b;
@@ -47,7 +29,91 @@ void test_areEqual_returns_0_if_array_lengths_are_same_and_values_are_different(
 	assertEqual(expected,actual);
 }
 
-void test_isEqual_returns_1_if_array_lengths_are_same_and_values_are_same_for_char() {
+void test_areEqual_returns_1_if_array_lengths_are_same_and_values_are_same_for_integers() {
+	int *arr1,*arr2;
+	ArrayUtil a,b;
+	int expected = 1,actual;
+	a.length = 1;
+	a.typeSize = sizeof(int);
+	b.length = 1;
+	b.typeSize = sizeof(int);
+	arr1 = (int *)malloc(sizeof(int)*a.length);
+	arr1[0] = 7;
+	a.base = arr1;
+	arr2 = (int *)malloc(sizeof(int)*b.length);
+	arr2[0] = 7;
+	b.base = arr2;
+	actual = areEqual(a,b);
+	assertEqual(expected,actual);
+}
+
+void test_areEqual_returns_1_if_for_same_integer_arrayUtils() {
+	ArrayUtil a = {(int[]){1,2},sizeof(int),2},b = {(int[]){1,2},sizeof(int),2};
+	assertEqual(areEqual(a,b),1);
+}
+
+void test_areEqual_returns_0_if_for_different_integer_arrayUtils() {
+	ArrayUtil a = {(int[]){1,2},sizeof(int),2},b = {(int[]){1,3},sizeof(int),2};
+	assertEqual(areEqual(a,b),0);
+}
+
+void test_areEqual_returns_1_if_for_same_float_arrayUtils() {
+	ArrayUtil a = {(float[]){1.2,2.2},sizeof(float),2},b = {(float[]){1.2,2.2},sizeof(float),2};
+	assertEqual(areEqual(a,b),1);
+}
+
+void test_areEqual_returns_0_if_for_different_float_arrayUtils() {
+	ArrayUtil a = {(float[]){1.2,2.2},sizeof(float),2},b = {(float[]){1.2,2.9},sizeof(float),2};
+	assertEqual(areEqual(a,b),0);
+}
+
+void test_areEqual_returns_1_if_for_same_character_arrayUtils() {
+	ArrayUtil a = {(char[]){'a','b'},sizeof(char),2},b = {(char[]){'a','b'},sizeof(char),2};
+	assertEqual(areEqual(a,b),1);
+}
+
+void test_areEqual_returns_0_if_for_different_character_arrayUtils() {
+	ArrayUtil a = {(char[]){'a','b'},sizeof(char),2},b = {(char[]){'a','c'},sizeof(char),2};
+	assertEqual(areEqual(a,b),0);
+}
+
+void test_areEqual_returns_1_for_same_string_arrayUtils() {
+	ArrayUtil a = {(string[]){"ab","cd"},sizeof(string),2},b = {(string[]){"ab","cd"},sizeof(string),2};
+	assertEqual(areEqual(a,b),1);
+}
+
+void test_areEqual_returns_0_for_different_string_arrayUtils() {
+	ArrayUtil a = {(string[]){"ab","cd"},sizeof(string),2},b = {(string[]){"ab","cD"},sizeof(string),2};
+	assertEqual(areEqual(a,b),0);
+}
+
+void test_areEqual_returns_1_for_emptystring_arrayUtils() {
+	ArrayUtil a = {(string[]){"ab",""},sizeof(string),2},b = {(string[]){"ab",""},sizeof(string),2};
+	assertEqual(areEqual(a,b),1);
+}
+
+void test_areEqual_returns_0_for_different_array_containing_emptystring_arrayUtils() {
+	ArrayUtil a = {(string[]){"","66"},sizeof(string),2},b = {(string[]){"ab",""},sizeof(string),2};
+	assertEqual(areEqual(a,b),0);
+}
+
+void test_areEqual_returns_1_for_different_utils_containing_same_number_as_characters() {
+	ArrayUtil a = {(char[]){'4','6'},sizeof(char),2},b = {(char[]){'4','6'},sizeof(char),2};
+	assertEqual(areEqual(a,b),1);
+}
+
+void test_areEqual_returns_0_for_different_array_containing_number_as_strings() {
+	ArrayUtil a = {(string[]){"34","66"},sizeof(string),2},b = {(string[]){"34","67"},sizeof(string),2};
+	assertEqual(areEqual(a,b),0);
+}
+
+void test_areEqual_returns_1_for_same_array_containing_number_as_strings() {
+	ArrayUtil a = {(string[]){"34","66"},sizeof(string),2},b = {(string[]){"34","66"},sizeof(string),2};
+	assertEqual(areEqual(a,b),1);
+}
+
+
+void test_areEqual_returns_1_if_array_lengths_are_same_and_values_are_same_for_char() {
 	char *arr1,*arr2;
 	ArrayUtil a,b;
 	int expected = 0,actual;
@@ -64,7 +130,7 @@ void test_isEqual_returns_1_if_array_lengths_are_same_and_values_are_same_for_ch
 	actual = areEqual(a,b);
 	assertEqual(expected,actual);
 }
-
+//===================================================================================================================
 void test_creates_returns_1_if_array_lengths_are_same_and_values_are_same() {
 	ArrayUtil a,b;
 	int expected = 1,actual;
