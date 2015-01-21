@@ -112,6 +112,10 @@ void test_areEqual_returns_1_for_same_array_containing_number_as_strings() {
 	assertEqual(areEqual(a,b),1);
 }
 
+void test_areEqual_returns_1_for_same_double_type_array_containing_numbers() {
+	ArrayUtil a = {(double[]){34.34,66.66},sizeof(double),2},b = {(double[]){34.34,66.66},sizeof(double),2};
+	assertEqual(areEqual(a,b),1);
+}
 
 void test_areEqual_returns_1_if_array_lengths_are_same_and_values_are_same_for_char() {
 	char *arr1,*arr2;
@@ -130,15 +134,34 @@ void test_areEqual_returns_1_if_array_lengths_are_same_and_values_are_same_for_c
 	actual = areEqual(a,b);
 	assertEqual(expected,actual);
 }
-//===================================================================================================================
-void test_creates_returns_1_if_array_lengths_are_same_and_values_are_same() {
+
+void test_resize_sets_new_elements_to_zero_in_double(){
+	ArrayUtil util;
+	double expectedArray[] = {1.0,0.0};
+	ArrayUtil b = {expectedArray,sizeof(double),2};
+	util = create(sizeof(double),1);
+	((double*)util.base)[0] = 1.0;
+	util = resize(util, 2);
+	assert(areEqual(b, util));
+}
+
+//===================================================================================
+
+void test_create_returns_same_array_if_array_lengths_are_same_and_values_are_same() {
 	ArrayUtil a,b;
 	int expected = 1,actual;
 	a = create(sizeof(int),2);
 	b = create(sizeof(int),2);
 	assert(areEqual(a,b) == 1);
-	assert(((int*)a.base)[0]==0);
 }
+
+void test_create_creates_arrayutil_with_all_the_elements_0(){
+	ArrayUtil a = {(int[]){0,0},sizeof(int),2},b;
+	b = create(sizeof(int),2);
+	assertEqual(areEqual(a,b),1);
+}
+
+//===================================================================================
 
 void test_resize_returns_1_if_array_lengths_are_same_and_values_are_same() {
 	ArrayUtil a,b;
@@ -153,6 +176,18 @@ void test_resize_returns_1_if_array_lengths_are_same_and_values_are_same() {
 	assert(((int*)b.base)[0] == 1);
 }
 
+void test_resize_trims_the_given_array_util_if_given_length_is_smaller_than_the_original_length() {
+	ArrayUtil a = {(int[]){1,2},sizeof(int),2},b = {(int[]){1},sizeof(int),1};
+	assert(areEqual(resize(a,1),b));
+}
+
+void test_resize_increases_the_given_array_util_if_given_length_is_greater_than_the_original_length_and_sets_extra_element_0() {
+	ArrayUtil a = {(int[]){1,2},sizeof(int),2},b = {(int[]){1,2,0,0,0},sizeof(int),5};
+	assert(areEqual(resize(a,5),b));
+}
+
+//====================================================================================
+
 void test_indexof_returns_negative_1_if_element_if_element_not_found(){
 	ArrayUtil a;
 	int b,x;
@@ -164,6 +199,18 @@ void test_indexof_returns_negative_1_if_element_if_element_not_found(){
 	x = 4;
 	b = findIndex(a,&x);
 	assertEqual(b, -1);	
+}
+
+void test_indexof_returns_negative_1_if_the_given_element_is_not_found_in_integer_array(){
+	ArrayUtil a = {(int[]){1,2,3,0,5},sizeof(int),5};
+	int x = 9;
+	assertEqual(findIndex(a,&x),-1);
+}
+
+void test_indexof_returns_position_of_element_if_the_given_element_is_found_in_integer_array(){
+	ArrayUtil a = {(int[]){1,2,3,0,5},sizeof(int),5};
+	int x = 3;
+	assertEqual(findIndex(a,&x),2);
 }
 
 void test_indexof_returns_0_if_element_if_element_is_in_0_position(){

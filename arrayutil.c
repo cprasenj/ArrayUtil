@@ -31,10 +31,11 @@ ArrayUtil create(int typeSize,int length) {
 }
 
 ArrayUtil resize(ArrayUtil util,int length) {
-	int i;
+	int i,len;
 	ArrayUtil arr = {calloc(length,util.typeSize),util.typeSize,length};
 	if(util.length == length)return util;
-	for(i=0;i<length*util.typeSize;i++) {
+	len = (length<util.length) ? util.length : length;
+	for(i=0;i<util.length*util.typeSize;i++) {
 		((char *)arr.base)[i] = ((char *)util.base)[i];
 	}
 	return arr;

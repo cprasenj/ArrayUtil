@@ -9,6 +9,13 @@ struct rect {
 	int width;
 };
 
+typedef struct{
+char name[3];
+int roll;
+float percentage;
+} student;
+
+typedef char String[256];
 typedef char* string;
 typedef struct rect rectangle;
 typedef struct utilArray ArrayUtil;
