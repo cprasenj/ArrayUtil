@@ -6,9 +6,12 @@ int isEven(void* a){
 	return (*((int*)a)%2==0) ? 1 : 0;
 }
 
-
 int isUpperCase(void* a,void *b){
 	return (*((char*)a) >= 'A' && *((char*)a) <= 'Z') ? 1 : 0;
+}
+
+int isLessthanFloat(void* a,void* b) {
+	return (*((float*)a)<*((char*)b)) ? 1 : 0;	
 }
 
 int areEqual(ArrayUtil arr1,ArrayUtil arr2) {
@@ -108,18 +111,17 @@ int count(ArrayUtil util, MatchFunc* f, void* hint){
 }
 
 int isDivisible(void* a,void *b){
-	printf("%d\n",((int*)a)[0]);
 	return (*((int*)a)%*((int*)b) == 0) ? 1 : 0;
 }
 
 int filter(ArrayUtil util, MatchFunc* f, void* hint, void** destination, int maxItems ){
 	int i,res,tmp,count = 0,size = 0;
 	*destination = malloc(maxItems*util.typeSize);
-	for(i=0;i<util.length*util.typeSize;i+=util.typeSize){
-		res = f(&(util.base)[i],hint);
+	for(i=0;i<util.length*util.typeSize;i++){
+		res = f(&(util.base)[i*util.typeSize],hint);
 		if(res==1){
 			if(util.typeSize == sizeof(char)) {
-				((char*)(*destination))[size] = ((char*)util.base)[i];
+				((char*)(*destination))[size] = ((char*)util.base)[i*util.typeSize];
 			}
 			else{
 				((int*)(*destination))[size] = ((int*)util.base)[i];
@@ -136,10 +138,18 @@ void intConvertFunc(void* hint, void* sourceItem, void* destinationItem){
 	*((int *)destinationItem) = *((int *)hint) + *((int *)sourceItem);
 }
 
+void charConvertFunc(void* hint, void* sourceItem, void* destinationItem){
+	*((char*)destinationItem) = *((char*)sourceItem) - 32;
+}
+
+void floatConvertFunc(void* hint, void* sourceItem, void* destinationItem){
+	*((float*)destinationItem) = *((float*)sourceItem) + *((float*)hint);
+}
+
 void map(ArrayUtil source, ArrayUtil destination, ConvertFunc* convert, void* hint){
 	int i,size = 0;
-	for(i=0;i<source.length*source.typeSize;i++){
-		convert(hint,&((int *)source.base)[i],&((int *)destination.base)[i]);
+	for(i=0;i<source.length*source.typeSize;i+=source.typeSize){
+		convert(hint,&((char*)source.base)[i],&((char*)destination.base)[i]);
 	}
 }
 

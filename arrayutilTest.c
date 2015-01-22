@@ -435,21 +435,21 @@ void test_count_returns_negative_if_there_is_no_match_in_character_array(){
 
 //=====================================================================================
 
-// void test_filter_gives_2_4_for_1_2_3_4_5(){
-// 	ArrayUtil util = create(sizeof(int),5);
-// 	int *arr,i,result,hint = 2,*lIst;
-// 	void* list;
-// 	arr = (int*)util.base;
-// 	for(i=0;i<5;i++){
-// 		arr[i] = i+1;
-// 	}
-// 	result = filter(util, isDivisible,&hint,&list,2);
-// 	lIst = (int*)list;
-// 	assert(result==2);
-// 	assertEqual(lIst[0],2);
-// 	assertEqual(lIst[1],4);
-// 	free(list); 
-// }
+void test_filter_gives_2_4_for_1_2_3_4_5(){
+	ArrayUtil util = create(sizeof(int),5);
+	int *arr,i,result,hint = 2,*lIst;
+	void* list;
+	arr = (int*)util.base;
+	for(i=0;i<5;i++){
+		arr[i] = i+1;
+	}
+	result = filter(util, isDivisible,&hint,&list,2);
+	lIst = (int*)list;
+	assertEqual(result,2);
+	assertEqual(lIst[0],2);
+	assertEqual(lIst[1],4);
+	free(list); 
+}
 
 void test_filter_gives_D_E_for_a_b_c_D_E() {
 	ArrayUtil a = {(char[]){'a','b','c','D','E'},sizeof(char),5};
@@ -464,7 +464,18 @@ void test_filter_gives_D_E_for_a_b_c_D_E() {
 	free(list); 
 }
 
+void test_filter_gives_number_of_filtered_elements_for_float_array() {
+	ArrayUtil a = {(float[]){1.2,2.2,3.2,4.2,5.2},sizeof(float),5};
+	float *result,hint = 3.3;
+	void* list;
+	int count;
+	count =  filter(a,isUpperCase,&hint,&list,3);
+	assertEqual(count,3);
+	free(list);
+}
+
 //===========================================================================================
+
 void test_map_gives_2_3_4_5_6_for_1_2_3_4_5(){
 	ArrayUtil src = create(sizeof(int),5),dest = create(sizeof(int),5);
 	int *arr,i,hint = 1,*list;
@@ -483,6 +494,35 @@ void test_map_gives_2_3_4_5_6_for_1_2_3_4_5(){
 	dispose(src);
 }
 
+void test_map_gives_2_3_4_5_6_for_1_2_3_4_5_for_integer_array(){
+	ArrayUtil src = {(int[]){1,2,3,4,5},sizeof(int),5},dest = create(sizeof(int),5);
+	ArrayUtil tmp = {(int[]){2,3,4,5,6},sizeof(int),5};
+	int hint = 1;
+	map(src,dest,intConvertFunc,&hint);
+	assert(areEqual(dest,tmp)==1);
+	dispose(dest);
+}
+
+void test_map_gives_A_B_C_D_E_for_a_b_c_d_e_for_character_array(){
+	ArrayUtil src = {(char[]){'a','b','c','d','e'},sizeof(char),5},dest = create(sizeof(char),5);
+	ArrayUtil tmp = {(char[]){'A','B','C','D','E'},sizeof(char),5};
+	char hint = 32;
+	map(src,dest,charConvertFunc,&hint);
+	assertEqual(areEqual(dest,tmp),1);
+	dispose(dest);
+}
+
+void test_map_gives_result_for_float_array(){
+	ArrayUtil src = {(float[]){1.2,2.2,3.2,4.2,5.2},sizeof(float),5},dest = create(sizeof(float),5);
+	ArrayUtil tmp = {(float[]){2.2,3.2,4.2,5.2,6.2},sizeof(float),5};
+	float hint = 1.0;
+	map(src,dest,floatConvertFunc,&hint);
+	assertEqual(areEqual(dest,tmp),1);
+	dispose(dest);
+}
+
+//==========================================================================================
+
 void test_forEach_gives_2_3_4_5_6_for_1_2_3_4_5_in_same_array(){
 	ArrayUtil src = create(sizeof(int),5);
 	int *arr,i,hint = 1,*list;
@@ -497,10 +537,10 @@ void test_forEach_gives_2_3_4_5_6_for_1_2_3_4_5_in_same_array(){
 	assertEqual(list[2],4);
 	assertEqual(list[3],5);
 	assertEqual(list[4],6);
-	free(list); 
 	dispose(src);
 }
 
+//===========================================================================================
 void test_reduce_gives_20_for_1_2_3_4_5_in_same_array(){
 	ArrayUtil src = create(sizeof(int),5);
 	int *arr,i,hint = 1,*list,initval = 0;

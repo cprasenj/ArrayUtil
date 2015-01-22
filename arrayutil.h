@@ -42,3 +42,6 @@ void intAddOperation(void*,void*);
 void* reduce(ArrayUtil, ReducerFunc*, void*,void*);
 void* addReducerFunc(void*,void*,void*);
 int isUpperCase(void*,void*);
+int isLessthanFloat(void*,void*);
+void charConvertFunc(void*,void*,void*);
+void floatConvertFunc(void*,void*,void*);
