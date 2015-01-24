@@ -40,16 +40,9 @@ int isLessthanFloat(void* a,void* b) {
 }
 
 int areEqual(ArrayUtil arr1,ArrayUtil arr2) {
-	int i;
-	char *util1,*util2;
-	util1 = ((char*)arr1.base),util2 = ((char*)arr2.base);
 	if(arr1.length != arr2.length || arr1.typeSize != arr2.typeSize)
 		return 0;
-	for(i=0;i<arr1.length*arr1.typeSize;i++) {
-		if(util1[i] != util2[i])
-			return 0;
-	}
-	return 1;
+	return (memcmp(arr1.base,arr2.base,arr1.length*arr1.typeSize) == 0) ? 1 : 0;
 }
 
 ArrayUtil create(int typeSize,int length) {
