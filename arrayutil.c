@@ -2,6 +2,31 @@
 #include "arrayutil.h"
 #include <ctype.h>
 
+void* addReducerFunc(void* hint, void* previousItem, void* item){
+	*((int*)item) = *((int*)hint) + *((int*)previousItem) + *((int*)item);
+	return item; 
+}
+
+void intConvertFunc(void* hint, void* sourceItem, void* destinationItem){
+	*((int *)destinationItem) = *((int *)hint) + *((int *)sourceItem);
+}
+
+void charConvertFunc(void* hint, void* sourceItem, void* destinationItem){
+	*((char*)destinationItem) = *((char*)sourceItem) - 32;
+}
+
+void floatConvertFunc(void* hint, void* sourceItem, void* destinationItem){
+	*((float*)destinationItem) = *((float*)sourceItem) + *((float*)hint);
+}
+
+void intAddOperation(void* hint, void* item) {
+	*((int *)item) = *((int *)hint) + *((int *)item);	
+}
+
+int isDivisible(void* a,void *b){
+	return (*((int*)a)%*((int*)b) == 0) ? 1 : 0;
+}
+
 int isEven(void* a){
 	return (*((int*)a)%2==0) ? 1 : 0;
 }
@@ -20,11 +45,9 @@ int areEqual(ArrayUtil arr1,ArrayUtil arr2) {
 	util1 = ((char*)arr1.base),util2 = ((char*)arr2.base);
 	if(arr1.length != arr2.length || arr1.typeSize != arr2.typeSize)
 		return 0;
-		
 	for(i=0;i<arr1.length*arr1.typeSize;i++) {
-		if(util1[i] != util2[i]) {
+		if(util1[i] != util2[i])
 			return 0;
-		}
 	}
 	return 1;
 }
@@ -38,10 +61,8 @@ ArrayUtil resize(ArrayUtil util,int length) {
 	int i,len;
 	ArrayUtil arr = {calloc(length,util.typeSize),util.typeSize,length};
 	if(util.length == length)return util;
-	len = (length<util.length) ? util.length : length;
-	for(i=0;i<util.length*util.typeSize;i++) {
-		((char *)arr.base)[i] = ((char *)util.base)[i];
-	}
+	len = (length<util.length) ? length : util.length;
+	memcpy(arr.base,util.base,len*util.typeSize);
 	return arr;
 }
 
@@ -52,10 +73,10 @@ int findIndex(ArrayUtil util,void* element){//not working for double
 			if(((int*)util.base)[i] == *((int*)element))
 				return i;	
 		}
-		if(len == sizeof(double)){
-			if(((double*)util.base)[i] == *((double*)element))
-				return i;	
-		}
+		// if(len == sizeof(double)){
+			// if(((double*)util.base)[i] == *((double*)element))
+				// return i;	
+		// }
 	}
 	for(i=0;i<util.length*util.typeSize;i++){
 		if(((char*)util.base)[i] == *((char*)element))
@@ -65,20 +86,19 @@ int findIndex(ArrayUtil util,void* element){//not working for double
 }
 
 void dispose(ArrayUtil util) {
-	void *a;
+	util.base = NULL;
 	free(util.base);
 	util.length = 0;
-	util.base = a;
+	util.typeSize = 0;
 }
 
 void* findFirst(ArrayUtil util,MatchFunc* f, void* hint) {
-	int i,res,tmp,c = 2;
+	int i,res,c = 2;
 	void* result;
 	for(i=0;i<util.length*util.typeSize;(i+=util.typeSize)){
-		res = f(&((char*)util.base)[i],&c);
+		res = f(&((char*)util.base)[i],hint);
 		if(res==1){
-			tmp = ((char*)util.base)[i];
-			result = &tmp;
+			result = &((char*)util.base)[i];
 			return result;
 		}
 	}
@@ -86,13 +106,12 @@ void* findFirst(ArrayUtil util,MatchFunc* f, void* hint) {
 }
 
 void* findLast(ArrayUtil util,MatchFunc* f, void* hint) {
-	int i,res,tmp,c = 2;
+	int i,res;
 	void* result;
-	for(i=util.length*util.typeSize-util.typeSize;i>0;(i-=util.typeSize)){
-		res = f(&((char*)util.base)[i],&c);
+	for(i=util.length*util.typeSize;i>0;(i-=util.typeSize)){
+		res = f(&((char*)util.base)[i],hint);
 		if(res==1){
-			tmp = ((char*)util.base)[i];
-			result = &tmp;
+			result = &((char*)util.base)[i];
 			return result;
 		}
 	}
@@ -110,40 +129,17 @@ int count(ArrayUtil util, MatchFunc* f, void* hint){
 	return (count==0) ? -1 : count;	
 }
 
-int isDivisible(void* a,void *b){
-	return (*((int*)a)%*((int*)b) == 0) ? 1 : 0;
-}
-
 int filter(ArrayUtil util, MatchFunc* f, void* hint, void** destination, int maxItems ){
-	int i,res,tmp,count = 0,size = 0;
-	*destination = malloc(maxItems*util.typeSize);
+	int i,res,count = 0;
 	for(i=0;i<util.length*util.typeSize;i++){
 		res = f(&(util.base)[i*util.typeSize],hint);
 		if(res==1){
-			if(util.typeSize == sizeof(char)) {
-				((char*)(*destination))[size] = ((char*)util.base)[i*util.typeSize];
-			}
-			else{
-				((int*)(*destination))[size] = ((int*)util.base)[i];
-			}
+			((float*)(*destination))[count] = ((float*)util.base)[i];
 			count++;
-			size ++;
-			if(count == maxItems) return count;
+			if(count == maxItems) return count;	
 		}
 	}
 	return (count==0) ? -1 : count;
-}
-
-void intConvertFunc(void* hint, void* sourceItem, void* destinationItem){
-	*((int *)destinationItem) = *((int *)hint) + *((int *)sourceItem);
-}
-
-void charConvertFunc(void* hint, void* sourceItem, void* destinationItem){
-	*((char*)destinationItem) = *((char*)sourceItem) - 32;
-}
-
-void floatConvertFunc(void* hint, void* sourceItem, void* destinationItem){
-	*((float*)destinationItem) = *((float*)sourceItem) + *((float*)hint);
 }
 
 void map(ArrayUtil source, ArrayUtil destination, ConvertFunc* convert, void* hint){
@@ -153,26 +149,19 @@ void map(ArrayUtil source, ArrayUtil destination, ConvertFunc* convert, void* hi
 	}
 }
 
-void intAddOperation(void* hint, void* item) {
-	*((int *)item) = *((int *)hint) + *((int *)item);	
-}
 
 void forEach(ArrayUtil util, OperationFunc* operation, void* hint) {
 	int i;
-	for(i=0;i<util.length*util.typeSize;i++){
-		operation(hint,&((int *)util.base)[i]);
+	for(i=0;i<util.length*util.typeSize;i+=util.typeSize){
+		operation(hint,&((char*)util.base)[i]);
 	}	
 }
 
-void* addReducerFunc(void* hint, void* previousItem, void* item){
-	*((int*)item) = *((int*)hint) + *((int*)previousItem) + *((int*)item);
-	return item; 
-}
 
 void* reduce(ArrayUtil util, ReducerFunc* reducer, void* hint, void* intialValue){
 	int i;
-	for(i=0;i<util.length;i++){
-		intialValue =  reducer(hint,&((int *)util.base)[i],intialValue);
+	for(i=0;i<util.length*util.typeSize;i+=util.typeSize){
+		intialValue =  reducer(hint,&((char*)util.base)[i],intialValue);
 	}
 	return intialValue;
 }
