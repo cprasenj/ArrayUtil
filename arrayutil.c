@@ -73,10 +73,6 @@ int findIndex(ArrayUtil util,void* element){//not working for double
 			if(((int*)util.base)[i] == *((int*)element))
 				return i;	
 		}
-		// if(len == sizeof(double)){
-			// if(((double*)util.base)[i] == *((double*)element))
-				// return i;	
-		// }
 	}
 	for(i=0;i<util.length*util.typeSize;i++){
 		if(((char*)util.base)[i] == *((char*)element))
@@ -108,7 +104,7 @@ void* findFirst(ArrayUtil util,MatchFunc* f, void* hint) {
 void* findLast(ArrayUtil util,MatchFunc* f, void* hint) {
 	int i,res;
 	void* result;
-	for(i=util.length*util.typeSize;i>0;(i-=util.typeSize)){
+	for(i=util.length*util.typeSize-util.typeSize;i>0;(i-=util.typeSize)){
 		res = f(&((char*)util.base)[i],hint);
 		if(res==1){
 			result = &((char*)util.base)[i];
@@ -135,8 +131,8 @@ int filter(ArrayUtil util, MatchFunc* f, void* hint, void** destination, int max
 		res = f(&(util.base)[i*util.typeSize],hint);
 		if(res==1){
 			((float*)(*destination))[count] = ((float*)util.base)[i];
-			count++;
 			if(count == maxItems) return count;	
+			count++;
 		}
 	}
 	return (count==0) ? -1 : count;
