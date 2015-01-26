@@ -71,3 +71,8 @@ int isUpperCase(void*,void*);
 int isLessthanFloat(void*,void*);
 void charConvertFunc(void*,void*,void*);
 void floatConvertFunc(void*,void*,void*);
+int isGreaterThanHint (void*, void*);
+void *add_all(void*,void*,void*);
+int isGreaterThan5(void*,void*);
+int isCapital(void*,void*);
+int isCompareCharecter(void*,void*); 

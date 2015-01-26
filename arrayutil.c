@@ -39,6 +39,23 @@ int isLessthanFloat(void* a,void* b) {
 	return (*((float*)a)<*((char*)b)) ? 1 : 0;	
 }
 
+void *add_all(void* hint, void* previousItem, void* item){
+	*((int*)item)= *((int*)previousItem) + *((int*)item);
+	return ((int*)item);
+}
+
+int isGreaterThan5(void *item, void *hint) {
+    return(*(float *)item > 5);
+}
+
+int isCapital(void *item, void *hint) {
+    return((*(char *)item >=65) && (*(char *)item <= 91));
+}
+
+int isCompareCharecter(void* element,void* hint){
+    return (*((char*)hint) == *((char*)element)) ? 1 : 0;
+}
+
 int areEqual(ArrayUtil arr1,ArrayUtil arr2) {
 	if(arr1.length != arr2.length || arr1.typeSize != arr2.typeSize)
 		return 0;
@@ -56,19 +73,16 @@ ArrayUtil resize(ArrayUtil util,int length) {
 	if(util.length == length)return util;
 	len = (length<util.length) ? length : util.length;
 	memcpy(arr.base,util.base,len*util.typeSize);
+	dispose(util);
 	return arr;
 }
 
-int findIndex(ArrayUtil util,void* element){//not working for double
-	int i,j,len = sizeof(element);
-	for(i=0;i<util.length*util.typeSize;i++){
-		if(len == sizeof(int)){
-			if(((int*)util.base)[i] == *((int*)element))
-				return i;	
-		}
-	}
-	for(i=0;i<util.length*util.typeSize;i++){
-		if(((char*)util.base)[i] == *((char*)element))
+int findIndex(ArrayUtil util, void* hint){
+	int i;
+	void *base;
+	for(i=0; i<util.length;i++){
+		base = util.base+i*util.typeSize;
+		if(!memcmp(base, hint, util.typeSize))
 			return i;
 	}
 	return -1;
@@ -82,11 +96,10 @@ void dispose(ArrayUtil util) {
 }
 
 void* findFirst(ArrayUtil util,MatchFunc* f, void* hint) {
-	int i,res,c = 2;
+	int i;
 	void* result;
 	for(i=0;i<util.length*util.typeSize;(i+=util.typeSize)){
-		res = f(&((char*)util.base)[i],hint);
-		if(res==1){
+		if(f(&((char*)util.base)[i],hint)){
 			result = &((char*)util.base)[i];
 			return result;
 		}
@@ -95,11 +108,10 @@ void* findFirst(ArrayUtil util,MatchFunc* f, void* hint) {
 }
 
 void* findLast(ArrayUtil util,MatchFunc* f, void* hint) {
-	int i,res;
+	int i;
 	void* result;
 	for(i=util.length*util.typeSize-util.typeSize;i>0;(i-=util.typeSize)){
-		res = f(&((char*)util.base)[i],hint);
-		if(res==1){
+		if(f(&((char*)util.base)[i],hint)){
 			result = &((char*)util.base)[i];
 			return result;
 		}
@@ -109,20 +121,17 @@ void* findLast(ArrayUtil util,MatchFunc* f, void* hint) {
 
 int count(ArrayUtil util, MatchFunc* f, void* hint){
 	int i,res,count = 0;
-	for(i=0;i<util.length*util.typeSize;(i+=util.typeSize)){
-		res = f(&((char*)util.base)[i],hint);
-		if(res==1){
-			count++;
-		}
+	for(i=0;i<util.length;i++){
+		res = f(&((char*)util.base)[i*util.typeSize],hint);
+		(res==1) && count++;
 	}
 	return (count==0) ? -1 : count;	
 }
 
 int filter(ArrayUtil util, MatchFunc* f, void* hint, void** destination, int maxItems ){
-	int i,res,count = 0;
-	for(i=0;i<util.length*util.typeSize;i++){
-		res = f(&(util.base)[i*util.typeSize],hint);
-		if(res==1){
+	int i,count = 0;
+	for(i=0;i<util.length;i++){
+		if(f(&(util.base)[i*util.typeSize],hint)){
 			((float*)(*destination))[count] = ((float*)util.base)[i];
 			if(count == maxItems) return count;	
 			count++;
@@ -132,7 +141,7 @@ int filter(ArrayUtil util, MatchFunc* f, void* hint, void** destination, int max
 }
 
 void map(ArrayUtil source, ArrayUtil destination, ConvertFunc* convert, void* hint){
-	int i,size = 0;
+	int i;
 	for(i=0;i<source.length*source.typeSize;i+=source.typeSize){
 		convert(hint,&((char*)source.base)[i],&((char*)destination.base)[i]);
 	}

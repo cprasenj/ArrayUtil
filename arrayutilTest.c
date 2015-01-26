@@ -551,16 +551,6 @@ void test_filter_gives_D_E_for_a_b_c_D_E() {
 	free(list); 
 }
 
-void test_filter_gives_number_of_filtered_elements_for_float_array() {
-	ArrayUtil a = {(float[]){1.2,2.2,3.2,4.2,5.2},sizeof(float),5};
-	float *result,hint = 3.3;
-	void* list = malloc(3*sizeof(float));
-	int count;
-	count =  filter(a,isUpperCase,&hint,&list,3);
-	assertEqual(count,3);
-	free(list);
-}
-
 void test_map_gives_2_3_4_5_6_for_1_2_3_4_5(){
 	ArrayUtil src = create(sizeof(int),5),dest = create(sizeof(int),5);
 	int *arr,i,hint = 1,*list;
@@ -1149,10 +1139,6 @@ void test_for_findFirst_gives_the_first_element_of_an_array(){
     assertEqual(*result,8);
 }
 
-int isCompareCharecter(void* element,void* hint){
-    return (*((char*)hint) == *((char*)element)) ? 1 : 0;
-}
-
 void test_for_findFirst_gives_the_first_element_of_charecter_an_array(){
     char hint = 'c';
     char *result;
@@ -1187,7 +1173,6 @@ void test_create_allocates_space_for_INT_array_and_assigns_zero_to_all_bytes(){
 	expectedUtil.base = intArray;
 	expectedUtil.typeSize = sizeof(int);
 	expectedUtil.length = 4;
-
 	assertEqual(areEqual(expectedUtil,util),1);
 }
 
@@ -1233,14 +1218,6 @@ void test_that_function_creates_new_array_or_not(){
 	assertEqual(createArray[2], 0);
 	assertEqual(array.length, 3);
 	assertEqual(array.typeSize, 4);
-}
-
-int isCapital(void *item, void *hint) {
-    return((*(char *)item >=65) && (*(char *)item <= 91));
-}
-
-int isGreaterThan5(void *item, void *hint) {
-    return(*(float *)item > 5);
 }
 
 void test_areEqual_returns_0_if_typeSize_of_two_arrays_are_not_equal(){
@@ -1778,12 +1755,6 @@ void test_map_returns_square_of_each_element_in_array(){
 	assert(areEqual(expected, mapped));
 }
 
-void *add_all(void* hint, void* previousItem, void* item){
-	*((int*)item)= *((int*)previousItem) + *((int*)item);
-	return ((int*)item);
-}
-
-
 void test_reduce_gives_15_when_elements_are_1_2_3_4_5_and_initial_value_is_0(){
 	void *hint;
 	int intialValue=0;
@@ -2095,81 +2066,72 @@ void test_resize_should_contain_the_initial_array_element(){
 	free(array.base);
 }
 
-int isEVen(void *item,void *hint){
-	return *((int*)item)%2==0;
-}
-
 void test_filter_fills_filtered_array_with_even_numbers_of_existing_array_and_returns_count(){
 	int array[]={1,2,3,4,5,6,7,8};
 	int newArray[]={2,4,6,8};
 	ArrayUtil util={array,INT_SIZE,8};
 	int *filtered=(int *)malloc(INT_SIZE*4);
-	int counter=filter(util,isEVen,0,(void**)&filtered,4);
+	int counter=filter(util,isEven,0,(void**)&filtered,4);
  	assertEqual(counter,4);
  	free(filtered);
 }
 
-// void test_filter_filters_the_util_floatArray_which_matches_the_criteria (){
-// 	float hint = 5.1;
-// 	MatchFunc *match = &isGreaterThanHint;
-// 	ArrayUtil util = {(float[]){7.1,2.4,1.6,3.7,8.3,0.1},FLOAT_SIZE,6};
-// 	float *destination = malloc(2*sizeof(float));
-// 	destination = malloc(FLOAT_SIZE*2);
-// 	assertEqual(filter(util, match,&hint,&destination, 4),2);
-// 	assertEqual(destination[0], (float)7.1);
-// 	assertEqual(destination[1], (float)8.3);
-// }
+void test_filter_filters_the_util_floatArray_which_matches_the_criteria (){
+	float hint = 5.1;
+	MatchFunc *match = &isGreaterThanHint;
+	ArrayUtil util = {(float[]){7.1,2.4,1.6,3.7,8.3,0.1},FLOAT_SIZE,6};
+	float *destination = malloc(2*sizeof(float));
+	destination = malloc(FLOAT_SIZE*2);
+	assertEqual(filter(util, match,&hint,&destination, 4),2);
+	assertEqual(destination[0], (float)7.1);
+	assertEqual(destination[1], (float)8.3);
+}
 
-// void test_filter_returns_0_when_there_are_no_enven_no_in_existing_array(){
-// 	int array[]={1,3,5,7};
-// 	ArrayUtil util={array,INT_SIZE,4};
-// 	int *filtered=(int *)malloc(INT_SIZE*2);
-// 	int counter=filter(util,isEven,0,(void**)&filtered,2);
-//  	assertEqual(counter,0);
-//  	free(filtered);
-// }
+void test_filter_returns_0_when_there_are_no_enven_no_in_existing_array(){
+	int array[]={1,3,5,7};
+	ArrayUtil util={array,INT_SIZE,4};
+	int *filtered=(int *)malloc(INT_SIZE*2);
+	int counter=filter(util,isEven,0,(void**)&filtered,2);
+ 	assertEqual(counter,-1);
+ 	free(filtered);
+}
 
+void test_areEQual_returns_0_when_length_is_equal_but_typeSize_is_not_equal(){
+	int array1[]={1,2,3,4,5};
+	char array2[]={'a','b','c','d'};
+	ArrayUtil u1={array1,INT_SIZE,5};
+	ArrayUtil u2={array2,CHAR_SIZE,5};
+	assertEqual(areEqual(u1,u2), 0);
+}
 
+void test_filter_populate_destination_array_with_evenNumbers(){
+    int maxItem=6;
+    int *evens = (int *)malloc(INT_SIZE*maxItem);
+    util1 = (ArrayUtil){(int[]){101,22,12,13},sizeof(int),4};
+	assertEqual(filter(util1,isEven,0,(void**)&evens,maxItem),2);
+	assertEqual((evens[0]),22);
+	assertEqual((evens[1]),12);
+}
 
-// void test_filter_populate_destination_array_with_evenNumbers(){
-//     int maxItem=6;
-//     int *evens[maxItem];
-//     util1 = (ArrayUtil){(int[]){101,22,12,13},sizeof(int),4};
-// 	assertEqual(filter(util1,isEven,0,(void**)evens,maxItem),2);
-// 	assertEqual((evens[0]),22);
-// 	assertEqual((evens[1]),12);
-// }
+void test_filter_populate_destination_array_until_hits_max_size_and_return_no_element_added_to_id(){
+    int maxItem=2;
+    int *evens = (int *)malloc(INT_SIZE*maxItem);
+    util1 = (ArrayUtil){(int[]){101,22,12,14},sizeof(int),4};   	 
+	assertEqual(filter(util1,isEven,0,(void**)&evens,maxItem),2);
+	assertEqual((evens[0]),22);
+	assertEqual((evens[1]),12);    
+}
 
-// void test_filter_populate_destination_array_until_hits_max_size_and_return_no_element_added_to_id(){
-//     int maxItem=2;
-//     int *evens [maxItem];
-//     util1 = (ArrayUtil){(int[]){101,22,12,14},sizeof(int),4};   	 
-// 	assertEqual(filter(util1,isEven,0,(void**)evens,maxItem),2);
-// 	assertEqual(*(evens[0]),22);
-// 	assertEqual(*(evens[1]),12);    
-// }
-// void multiplyBy(void* hint, void* sourceItem, void* destinationItem){
-//     *(int*)destinationItem = *(int*)sourceItem * *(int*)(hint);
-// }
-
-// void test_areEqual_returns_0_when_length_is_equal_but_typeSize_is_not_equal(){
-// 	int array1[]={1,2,3,4,5};
-// 	char array2[]={'a','b','c','d'};
-// 	ArrayUtil u1={array1,INT_SIZE,5};
-// 	ArrayUtil u2={array2,CHAR_SIZE,5};
-// 	assertEqual(areEqual(u1,u2), 0);
-// }
-
-// int is_FloorEven(void* item, void* hint){
-// 	double* _item = (double*)item;
-// 	int ceil_item = floor(*_item);
-// 	return (ceil_item % 2) == 0 ? 1 : 0;
-// }
-// void test_count_should_count_matched_element_in_DOUBLE_array(){
-// 	double array[5] = {99.89,167.88,22.66,36.10,15.47908};
-// 	double x = 'a';
-// 	ArrayUtil util = create(sizeof(double),5);
-// 	util.base = array;
-// 	assertEqual(count(util,&is_FloorEven,&x),2);
-// 	dispose(util);
-// }
+int is_FloorEven(void* item, void* hint){
+	double* _item = (double*)item;
+	int ceil_item = floor(*_item);
+	return (ceil_item % 2) == 0 ? 1 : 0;
+}
+void test_count_should_count_matched_element_in_DOUBLE_array(){
+	double array[5] = {99.89,167.88,22.66,36.10,15.47908};
+	double x = 'a';
+	ArrayUtil util = create(sizeof(double),5);
+	util.base = array;
+	assertEqual(count(util,&is_FloorEven,&x),2);
+	dispose(util);
+}
