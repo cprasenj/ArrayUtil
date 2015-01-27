@@ -48,60 +48,432 @@ typedef struct studentForm {
 
 
 
-void test_areEqual_should_return_1_when_two_array_util_are_same () {
+void test_areEqual_001 () {
+	log("areEqual should return 1 when two array util are same");
     ArrayUtil util1 = { (int[]){1, 2}, INT_SIZE, 2};
     ArrayUtil util2 = { (int[]){1, 2}, INT_SIZE, 2};
     assertEqual(areEqual(util1, util2), 1);
 }
 
-void test_areEqual_should_return_0_when_two_array_util_are_not_same () {
+void test_areEqual_002 () {
+	log("areEqual should return 0 when two array util are not same");
     ArrayUtil util1 = { (int[]){1, 2, 3}, INT_SIZE, 3};
     ArrayUtil util2 = { (int[]){1, 2}, INT_SIZE, 2};
     assertEqual(areEqual(util1, util2), 0);
 }
 
-void test_areEqual_should_return_0_when_two_array_util_elements_are_not_same () {
+void test_areEqual_003 () {
+	log("areEqual should return 0 when two array util elements are not same");
     ArrayUtil util1 = { (int[]){1, 2}, INT_SIZE, 2};
     ArrayUtil util2 = { (int[]){3, 2}, INT_SIZE, 2};
     assertEqual(areEqual(util1, util2), 0);
 }
 
-void test_areEqual_for_float_should_return_1_when_two_array_util_elements_are_same () {
+void test_areEqual_004 () {
+	log("areEqual for float should return 1 when two array util elements are same");
     ArrayUtil util1 = { (float[]){1.1, 2.2}, FLOAT_SIZE, 2};
     ArrayUtil util2 = { (float[]){1.1, 2.2}, FLOAT_SIZE, 2};
     assertEqual(areEqual(util1, util2), 1);
 }
 
-void test_areEqual_for_float_should_return_1_when_two_array_util_elements_are_not_same () {
+void test_areEqual_005 () {
+	log("areEqual for float should return 1 when two array util elements are not same");
     ArrayUtil util1 = { (float[]){1.2, 2.2}, FLOAT_SIZE, 2};
     ArrayUtil util2 = { (float[]){1.1, 2.2}, FLOAT_SIZE, 2};
     assertEqual(areEqual(util1, util2), 0);
 }
 
-void test_areEqual_for_char_should_return_1_when_two_array_util_elements_are_same () {
+void test_areEqual_006 () {
+	log("areEqual for char should return 1 when two array util elements are same");
     ArrayUtil util1 = { (char[]){'a', 'b'}, CHAR_SIZE, 2};
     ArrayUtil util2 = { (char[]){'a', 'b'}, CHAR_SIZE, 2};
     assertEqual(areEqual(util1, util2), 1);
 }
 
-void test_areEqual_for_char_should_return_0_when_two_array_util_elements_are_not_same () {
+void test_areEqual_007 () {
+	log("areEqual for char should return 0 when two array util elements are not same");
     ArrayUtil util1 = { (char[]){'a', 'b'}, CHAR_SIZE, 2};
     ArrayUtil util2 = { (char[]){'c', 'b'}, CHAR_SIZE, 2};
     assertEqual(areEqual(util1, util2), 0);
 }
 
-void test_areEqual_for_Students_should_return_1_when_sets_of_data_are_same () {
+void test_areEqual_008 () {
+	log("areEqual for Students should return 1 when sets of data are same");
     ArrayUtil util1 = { (students[]){{1, 100}, {2, 200}}, sizeof(students), 2};
     ArrayUtil util2 = { (students[]){{1, 100}, {2, 200}}, sizeof(students), 2};
     assertEqual(areEqual(util1, util2), 1);
 }
 
-void test_areEqual_for_Students_should_return_0_when_sets_of_data_not_are_same () {
-    ArrayUtil util1 = { (students[]){{1, 100}, {2, 200}}, sizeof(students), 2};
-    ArrayUtil util2 = { (students[]){{1, 100}, {2, 100}}, sizeof(students), 2};
-    assertEqual(areEqual(util1, util2), 0);
+void test_areEqual_009() {
+	log("areEqual returns negative if array lengths are different");
+	int expected = 0,actual;
+	ArrayUtil a,b;
+	a.length = 5;
+	b.length = 6;
+	actual = areEqual(a,b);
+	assertEqual(expected,actual);
 }
-void test_should_return_0_when_two_different_size_of_array_are_created_as_int_type () {
+
+void test_areEqual_010() {
+	log("areEqual returns 1 if for same integer arrayUtils");
+	ArrayUtil a = {(int[]){1,2},sizeof(int),2},b = {(int[]){1,2},sizeof(int),2};
+	assertEqual(areEqual(a,b),1);
+}
+
+void test_areEqual_011() {
+	log("areEqual returns 0 if for different integer arrayUtils");
+	ArrayUtil a = {(int[]){1,2},sizeof(int),2},b = {(int[]){1,3},sizeof(int),2};
+	assertEqual(areEqual(a,b),0);
+}
+
+void test_areEqual_012() {
+	log("areEqual returns 1 if for same float arrayUtils");
+	ArrayUtil a = {(float[]){1.2,2.2},sizeof(float),2},b = {(float[]){1.2,2.2},sizeof(float),2};
+	assertEqual(areEqual(a,b),1);
+}
+
+void test_areEqual_013() {
+	log("areEqual returns 0 if for different float arrayUtils");
+	ArrayUtil a = {(float[]){1.2,2.2},sizeof(float),2},b = {(float[]){1.2,2.9},sizeof(float),2};
+	assertEqual(areEqual(a,b),0);
+}
+
+void test_areEqual_014() {
+	log("areEqual returns 1 if for same character arrayUtils");
+	ArrayUtil a = {(char[]){'a','b'},sizeof(char),2},b = {(char[]){'a','b'},sizeof(char),2};
+	assertEqual(areEqual(a,b),1);
+}
+
+void test_areEqual_015() {
+	log("areEqual returns 0 if for different character arrayUtils");
+	ArrayUtil a = {(char[]){'a','b'},sizeof(char),2},b = {(char[]){'a','c'},sizeof(char),2};
+	assertEqual(areEqual(a,b),0);
+}
+
+void test_areEqual_016() {
+	log("areEqual returns 1 for same string arrayUtils");
+	ArrayUtil a = {(string[]){"ab","cd"},sizeof(string),2},b = {(string[]){"ab","cd"},sizeof(string),2};
+	assertEqual(areEqual(a,b),1);
+}
+
+void test_areEqual_017() {
+	log("areEqual returns 0 for different string arrayUtils");
+	ArrayUtil a = {(string[]){"ab","cd"},sizeof(string),2},b = {(string[]){"ab","cD"},sizeof(string),2};
+	assertEqual(areEqual(a,b),0);
+}
+
+void test_areEqual_018() {
+	log("areEqual returns 1 for emptystring arrayUtils");
+	ArrayUtil a = {(string[]){"ab",""},sizeof(string),2},b = {(string[]){"ab",""},sizeof(string),2};
+	assertEqual(areEqual(a,b),1);
+}
+
+void test_areEqual_019() {
+	log("areEqual returns 0 for different array containing emptystring arrayUtils");
+	ArrayUtil a = {(string[]){"","66"},sizeof(string),2},b = {(string[]){"ab",""},sizeof(string),2};
+	assertEqual(areEqual(a,b),0);
+}
+
+void test_areEqual_020() {
+	log("areEqual returns 1 for different utils containing same number as characters");
+	ArrayUtil a = {(char[]){'4','6'},sizeof(char),2},b = {(char[]){'4','6'},sizeof(char),2};
+	assertEqual(areEqual(a,b),1);
+}
+
+void test_areEqual_021() {
+	log("areEqual returns 0 for different array containing number as strings");
+	ArrayUtil a = {(string[]){"34","66"},sizeof(string),2},b = {(string[]){"34","67"},sizeof(string),2};
+	assertEqual(areEqual(a,b),0);
+}
+
+void test_areEqual_022() {
+	log("areEqual returns 1 for same array containing number as strings");
+	ArrayUtil a = {(string[]){"34","66"},sizeof(string),2},b = {(string[]){"34","66"},sizeof(string),2};
+	assertEqual(areEqual(a,b),1);
+}
+
+void test_areEqual_023() {
+	log("areEqual returns 1 for same double type array containing numbers");
+	ArrayUtil a = {(double[]){34.34,66.66},sizeof(double),2},b = {(double[]){34.34,66.66},sizeof(double),2};
+	assertEqual(areEqual(a,b),1);
+}
+
+void test_areEqual_024(){
+	log("areEqual return 1 when both int array lenght base and typesize and elements are same");
+	int array1[]={1,2,3,4,5};
+	int array2[]={1,2,3,4,5};
+	ArrayUtil u1={array1,INT_SIZE,5};
+	ArrayUtil u2={array2,INT_SIZE,5};
+	assertEqual(areEqual(u1,u2), 1);
+}
+
+void test_areEqual_025(){
+	log("areEqual return 1 when both float array lenght base and typesize and elements are same");
+	float array1[]={1.5,2.5,3.5,4.5,5.5};
+	float array2[]={1.5,2.5,3.5,4.5,5.5};
+	ArrayUtil u1={array1,FLOAT_SIZE,5};
+	ArrayUtil u2={array2,FLOAT_SIZE,5};
+	assertEqual(areEqual(u1,u2), 1);
+}
+
+void test_areEqual_return_0_when_both_float_base_and_typesizeare_same_but_one_has_less_element(){
+	float array1[]={1.5,2.5,3.5,4.5};
+	float array2[]={1.5,2.5,3.5,4.5,5.5};
+	ArrayUtil u1={array1,FLOAT_SIZE,5};
+	ArrayUtil u2={array2,FLOAT_SIZE,5};
+	assertEqual(areEqual(u1,u2), 0);
+}
+
+void test_areEqual_return_0_when_both_float_base_and_typesizeare_same_but_second_has_less_element(){
+	float array1[]={1.5,2.5,3.5,4.5};
+	float array2[]={1.5,2.5,3.5};
+	ArrayUtil u1={array1,FLOAT_SIZE,4};
+	ArrayUtil u2={array2,FLOAT_SIZE,4};
+	assertEqual(areEqual(u1,u2), 0);
+}
+
+void test_areEqual_return_0_when_both_float_array_length_are_different(){
+	float array1[]={1.5,2.5,3.5,4.5};
+	float array2[]={1.5,2.5,3.5};
+	ArrayUtil u1={array1,FLOAT_SIZE,4};
+	ArrayUtil u2={array2,FLOAT_SIZE,3};
+	assertEqual(areEqual(u1,u2), 0);
+}
+
+void test_areEqual_return_0_when_one_is_float_array_and_second_is_int_array_typesize_different(){
+	float array1[]={1.0,2.0,3.0,4.0};
+	int array2[]={1,2,3,4};
+	ArrayUtil u1={array1,FLOAT_SIZE,4};
+	ArrayUtil u2={array2,INT_SIZE,4};
+	assertEqual(areEqual(u1,u2), 0);
+}
+
+void test_areEqual_return_0_when_one_is_float_array_and_second_is_int_array_typesize_same(){
+	float array1[]={1.0,2.0,3.0,4.0};
+	int array2[]={1,2,3,4};
+	ArrayUtil u1={array1,FLOAT_SIZE,4};
+	ArrayUtil u2={array2,FLOAT_SIZE,4};
+	assertEqual(areEqual(u1,u2), 0);
+}
+
+void test_areEqual_return_0_both_have_same_float_array_typesize_different(){
+	float array1[]={1.0,2.0,3.0,4.0};
+	float array2[]={1.0,2.0,3.0,4.0};
+	ArrayUtil u1={array1,FLOAT_SIZE,4};
+	ArrayUtil u2={array2,CHAR_SIZE,4};
+	assertEqual(areEqual(u1,u2), 0);
+}
+
+void test_areEqual_return_1_when_both_doube_array_lenght_base_and_typesize_and_elements_are_same(){
+	double array1[]={1.5,2.5,3.5,4.5,5.5};
+	double array2[]={1.5,2.5,3.5,4.5,5.5};
+	ArrayUtil u1={array1,DOUBLE_SIZE,5};
+	ArrayUtil u2={array2,DOUBLE_SIZE,5};
+	assertEqual(areEqual(u1,u2), 1);
+}
+
+void test_areEqual_return_0_when_both_double_base_and_typesizeare_same_but_one_has_less_element(){
+	double array1[]={1.5,2.5,3.5,4.5};
+	double array2[]={1.5,2.5,3.5,4.5,5.5};
+	ArrayUtil u1={array1,DOUBLE_SIZE,5};
+	ArrayUtil u2={array2,DOUBLE_SIZE,5};
+	assertEqual(areEqual(u1,u2), 0);
+}
+
+void test_areEqual_return_0_when_both_double_base_and_typesizeare_same_but_second_has_less_element(){
+	double array1[]={1.5,2.5,3.5,4.5};
+	double array2[]={1.5,2.5,3.5};
+	ArrayUtil u1={array1,DOUBLE_SIZE,4};
+	ArrayUtil u2={array2,DOUBLE_SIZE,4};
+	assertEqual(areEqual(u1,u2), 0);
+}
+
+void test_areEqual_return_0_when_both_double_array_length_are_different(){
+	double array1[]={1.5,2.5,3.5,4.5};
+	double array2[]={1.5,2.5,3.5};
+	ArrayUtil u1={array1,DOUBLE_SIZE,4};
+	ArrayUtil u2={array2,DOUBLE_SIZE,3};
+	assertEqual(areEqual(u1,u2), 0);
+}
+
+void test_areEqual_return_0_when_one_is_double_array_and_second_is_int_array_typesize_different(){
+	double array1[]={1.0,2.0,3.0,4.0};
+	int array2[]={1,2,3,4};
+	ArrayUtil u1={array1,DOUBLE_SIZE,4};
+	ArrayUtil u2={array2,INT_SIZE,4};
+	assertEqual(areEqual(u1,u2), 0);
+}
+
+void test_areEqual_return_0_when_one_is_int_array_and_second_is_int_array_typesize_same(){
+	double array1[]={1.0,2.0,3.0,4.0};
+	int array2[]={1,2,3,4};
+	ArrayUtil u1={array1,DOUBLE_SIZE,4};
+	ArrayUtil u2={array2,DOUBLE_SIZE,4};
+	assertEqual(areEqual(u1,u2), 0);
+}
+
+void test_areEqual_return_0_both_have_same_double_array_typesize_different(){
+	double array1[]={1.0,2.0,3.0,4.0};
+	double array2[]={1.0,2.0,3.0,4.0};
+	ArrayUtil u1={array1,DOUBLE_SIZE,4};
+	ArrayUtil u2={array2,CHAR_SIZE,4};
+	assertEqual(areEqual(u1,u2), 0);
+}
+
+void test_areEqual_return_1_when_both_characetr_array_lenght_base_and_typesize_and_elements_are_same(){
+	char array1[]={'a','b','c','d','\0'};
+	char array2[]={'a','b','c','d','\0'};
+	ArrayUtil u1={array1,CHAR_SIZE,5};
+	ArrayUtil u2={array2,CHAR_SIZE,5};
+	assertEqual(areEqual(u1,u2), 1);
+}
+
+void test_areEqual_return_0_when_both_characetr_array_lenght_are_same_but_typesize_is_different(){
+	int array1[]={1,2,3,4,5};
+	char array2[]={'a','b','c','d','\0'};
+	ArrayUtil u1={array1,INT_SIZE,5};
+	ArrayUtil u2={array2,CHAR_SIZE,5};
+	assertEqual(areEqual(u1,u2), 0);
+}
+
+void test_areEqual_return_0_when_both_characetr_array_typesize_are_same_but_length_is_different(){
+	char array1[]={'a','b','c','\0'};
+	char array2[]={'a','b','c','d','\0'};
+	ArrayUtil u1={array1,INT_SIZE,4};
+	ArrayUtil u2={array2,CHAR_SIZE,5};
+	assertEqual(areEqual(u1,u2), 0);
+}
+
+void test_areEqual_return_1_for_array_of_string_if_everything_is_same(){
+	STRING array1[]={"abc","abc","abc","abc","abc"};
+	STRING array2[]={"abc","abc","abc","abc","abc"};
+	ArrayUtil u1={array1,STRING_SIZE,5};
+	ArrayUtil u2={array2,STRING_SIZE,5};
+	assertEqual(areEqual(u1,u2), 1);
+}
+
+void test_areEqual_return_0_for_array_of_string_if_lenghts_are_different(){
+	STRING array1[]={"abc","abc","abc","abc","abc"};
+	STRING array2[]={"abc","abc","abc","abc","abc"};
+	ArrayUtil u1={array1,STRING_SIZE,5};
+	ArrayUtil u2={array2,STRING_SIZE,4};
+	assertEqual(areEqual(u1,u2), 0);
+}
+
+void test_areEqual_return_1_when_length_and_typesize_are_same_and_each_ele_is_empty_string(){
+	STRING array1[]={"","","","",""};
+	STRING array2[]={"","","","",""};
+	ArrayUtil u1={array1,STRING_SIZE,5};
+	ArrayUtil u2={array2,STRING_SIZE,5};
+	assertEqual(areEqual(u1,u2), 1);
+}
+
+void test_areEqual_return_0_when_typesize_and_length_are_same_but_first_has_less_element(){
+	STRING array1[]={"","","",""};
+	STRING array2[]={"","","","",""};
+	ArrayUtil u1={array1,STRING_SIZE,5};
+	ArrayUtil u2={array2,STRING_SIZE,5};
+	assertEqual(areEqual(u1,u2), 0);
+}
+
+void test_areEqual_return_0_when_typesize_is_same_but_second_has_less_element_and_less_length(){
+	STRING array1[]={"ank","aks","ank","aks","ank"};
+	STRING array2[]={"ank","aks","ank","aks"};
+	ArrayUtil u1={array1,STRING_SIZE,5};
+	ArrayUtil u2={array2,STRING_SIZE,4};
+	assertEqual(areEqual(u1,u2), 0);
+}
+
+void test_areEqual_return_0_when_1_typesize_is_STRING_SIZE_and_2_is_INT_SIZE(){
+	STRING array1[]={"abc","abc","abc","abc","abc"};
+	int array2[]={1,2,3,4,5};
+	ArrayUtil u1={array1,STRING_SIZE,5};
+	ArrayUtil u2={array2,INT_SIZE,4};
+	assertEqual(areEqual(u1,u2), 0);
+}
+
+void test_areEqual_returns_0_when_lenght_are_not_equal(){
+	int array1[]={1,2,3,4};
+	int array2[]={1,2,3,4,5};
+	ArrayUtil u1={array1,INT_SIZE,4};
+	ArrayUtil u2={array2,INT_SIZE,5};
+	assertEqual(areEqual(u1,u2), 0);
+}
+
+void test_create_001(){
+	log("returns an ArrayUtil with bytes initialized to ZERO for int");
+	ArrayUtil util1 = {array_0_0, sizeOf_int, 2};
+	ArrayUtil util2 = create(sizeOf_int, 2);
+	assertEqual(areEqual(util1, util2), YES);
+	dispose(util2);
+}
+
+void test_create_002(){
+	log("returns an ArrayUtil with bytes initialized to NULL for char");
+	ArrayUtil util1 = {array_null_null, sizeOf_char, 2};
+	ArrayUtil util2 = create(sizeOf_char, 2);
+	assertEqual(areEqual(util1, util2), YES);
+	dispose(util2);
+}
+
+void test_create_003(){
+	log("returns an ArrayUtil with bytes initialized to ZERO for float");
+	ArrayUtil util1 = {array_flt_flt, sizeOf_float, 2};
+	ArrayUtil util2 = create(sizeOf_float, 2);
+	assertEqual(areEqual(util1, util2), YES);
+	dispose(util2);
+}
+
+void test_create_004(){
+	log("returns an ArrayUtil with bytes initialized to ZERO for double");
+	ArrayUtil util1 = {array_dble_dble, sizeOf_double, 2};
+	ArrayUtil util2 = create(sizeOf_double, 2);
+	assertEqual(areEqual(util1, util2), YES);
+	dispose(util2);
+}
+
+void test_create_007(){
+	log("returns an ArrayUtil with bytes initialized to ZERO for float[5]");
+	ArrayUtil util1 = {array_float5_0s, sizeOf_float5, 1};
+	ArrayUtil util2 = create(sizeOf_float5, 1);
+	assertEqual(areEqual(util1, util2), YES);
+	dispose(util2);
+}
+
+void test_create_008(){
+	log("returns an ArrayUtil with bytes initialized to ZERO for struct");
+	ArrayUtil util1 = {array_Students, sizeOf_Student, 1};
+	ArrayUtil util2 = create(sizeOf_Student, 1);
+	assertEqual(areEqual(util1, util2), YES);
+	dispose(util2);
+}
+
+void test_create_009(){
+	log("returns an ArrayUtil with bytes initialized to ZERO for void *");
+	ArrayUtil util1 = {array_void_stars, sizeOf_void_star, 1};
+	ArrayUtil util2 = create(sizeOf_void_star, 1);
+	assertEqual(areEqual(util1, util2), YES);
+	dispose(util2);
+}
+
+void test_create_010(){
+	log("returns an ArrayUtil with bytes initialized to ZERO for char *");
+	ArrayUtil util1 = {array_char_stars, sizeOf_char_star, 1};
+	ArrayUtil util2 = create(sizeOf_char_star, 1);
+	assertEqual(areEqual(util1, util2), YES);
+	dispose(util2);
+}
+
+void test_create_011(){
+	log("returns an ArrayUtil with bytes initialized to ZERO for int *");
+	ArrayUtil util1 = {array_int_stars, sizeOf_int_star, 1};
+	ArrayUtil util2 = create(sizeOf_int_star, 1);
+	assertEqual(areEqual(util1, util2), YES);
+	dispose(util2);
+}
+
+void test_create_012 () {
+	log("create should return 0 when two different size of array are created as int type");
     ArrayUtil util1, util2;
     util1 = create(INT_SIZE, 2);
     util2 = create(INT_SIZE, 3);
@@ -110,7 +482,8 @@ void test_should_return_0_when_two_different_size_of_array_are_created_as_int_ty
     dispose(util2);
 }
 
-void test_should_return_0_when_two_different_type_of_array_are_created () {
+void test_create_013 () {
+	log("create should return 0 when two different type of array are created");
     ArrayUtil util1, util2;
     util1 = create(INT_SIZE, 2);
     util2 = create(FLOAT_SIZE, 2);
@@ -120,7 +493,8 @@ void test_should_return_0_when_two_different_type_of_array_are_created () {
     dispose(util2);
 }
 
-void test_should_return_1_when_two_float_type_of_array_are_created_whose_length_are_same () {
+void test_create_014 () {
+	log("create should return 1 when two float type of array are created whose length are same");
     ArrayUtil util1, util2;
     util1 = create(FLOAT_SIZE, 2);
     util2 = create(FLOAT_SIZE, 2);
@@ -129,7 +503,8 @@ void test_should_return_1_when_two_float_type_of_array_are_created_whose_length_
     dispose(util2);
 }
 
-void test_should_return_0_when_one_float_and_one_char_type_of_array_are_created_whose_length_are_same () {
+void test_create_015 () {
+	log("create should return 0 when one float and one char type of array are created whose length are same");
     ArrayUtil util1, util2;
     util1 = create(INT_SIZE, 2);
     util2 = create(CHAR_SIZE, 2);
@@ -215,85 +590,6 @@ void test_findIndex_should_give_minus_1_as_index_of_the_array () {
     a[1] = 2;
     element = 3;
     assertEqual(findIndex(array1, &element), -1);
-}
-
-void test_areEqual_returns_negative_if_array_lengths_are_different() {
-	int expected = 0,actual;
-	ArrayUtil a,b;
-	a.length = 5;
-	b.length = 6;
-	actual = areEqual(a,b);
-	assertEqual(expected,actual);
-}
-
-void test_areEqual_returns_1_if_for_same_integer_arrayUtils() {
-	ArrayUtil a = {(int[]){1,2},sizeof(int),2},b = {(int[]){1,2},sizeof(int),2};
-	assertEqual(areEqual(a,b),1);
-}
-
-void test_areEqual_returns_0_if_for_different_integer_arrayUtils() {
-	ArrayUtil a = {(int[]){1,2},sizeof(int),2},b = {(int[]){1,3},sizeof(int),2};
-	assertEqual(areEqual(a,b),0);
-}
-
-void test_areEqual_returns_1_if_for_same_float_arrayUtils() {
-	ArrayUtil a = {(float[]){1.2,2.2},sizeof(float),2},b = {(float[]){1.2,2.2},sizeof(float),2};
-	assertEqual(areEqual(a,b),1);
-}
-
-void test_areEqual_returns_0_if_for_different_float_arrayUtils() {
-	ArrayUtil a = {(float[]){1.2,2.2},sizeof(float),2},b = {(float[]){1.2,2.9},sizeof(float),2};
-	assertEqual(areEqual(a,b),0);
-}
-
-void test_areEqual_returns_1_if_for_same_character_arrayUtils() {
-	ArrayUtil a = {(char[]){'a','b'},sizeof(char),2},b = {(char[]){'a','b'},sizeof(char),2};
-	assertEqual(areEqual(a,b),1);
-}
-
-void test_areEqual_returns_0_if_for_different_character_arrayUtils() {
-	ArrayUtil a = {(char[]){'a','b'},sizeof(char),2},b = {(char[]){'a','c'},sizeof(char),2};
-	assertEqual(areEqual(a,b),0);
-}
-
-void test_areEqual_returns_1_for_same_string_arrayUtils() {
-	ArrayUtil a = {(string[]){"ab","cd"},sizeof(string),2},b = {(string[]){"ab","cd"},sizeof(string),2};
-	assertEqual(areEqual(a,b),1);
-}
-
-void test_areEqual_returns_0_for_different_string_arrayUtils() {
-	ArrayUtil a = {(string[]){"ab","cd"},sizeof(string),2},b = {(string[]){"ab","cD"},sizeof(string),2};
-	assertEqual(areEqual(a,b),0);
-}
-
-void test_areEqual_returns_1_for_emptystring_arrayUtils() {
-	ArrayUtil a = {(string[]){"ab",""},sizeof(string),2},b = {(string[]){"ab",""},sizeof(string),2};
-	assertEqual(areEqual(a,b),1);
-}
-
-void test_areEqual_returns_0_for_different_array_containing_emptystring_arrayUtils() {
-	ArrayUtil a = {(string[]){"","66"},sizeof(string),2},b = {(string[]){"ab",""},sizeof(string),2};
-	assertEqual(areEqual(a,b),0);
-}
-
-void test_areEqual_returns_1_for_different_utils_containing_same_number_as_characters() {
-	ArrayUtil a = {(char[]){'4','6'},sizeof(char),2},b = {(char[]){'4','6'},sizeof(char),2};
-	assertEqual(areEqual(a,b),1);
-}
-
-void test_areEqual_returns_0_for_different_array_containing_number_as_strings() {
-	ArrayUtil a = {(string[]){"34","66"},sizeof(string),2},b = {(string[]){"34","67"},sizeof(string),2};
-	assertEqual(areEqual(a,b),0);
-}
-
-void test_areEqual_returns_1_for_same_array_containing_number_as_strings() {
-	ArrayUtil a = {(string[]){"34","66"},sizeof(string),2},b = {(string[]){"34","66"},sizeof(string),2};
-	assertEqual(areEqual(a,b),1);
-}
-
-void test_areEqual_returns_1_for_same_double_type_array_containing_numbers() {
-	ArrayUtil a = {(double[]){34.34,66.66},sizeof(double),2},b = {(double[]){34.34,66.66},sizeof(double),2};
-	assertEqual(areEqual(a,b),1);
 }
 
 void test_resize_sets_new_elements_to_zero_in_double(){
@@ -569,15 +865,6 @@ void test_map_gives_2_3_4_5_6_for_1_2_3_4_5(){
 	dispose(src);
 }
 
-void test_map_gives_2_3_4_5_6_for_1_2_3_4_5_for_integer_array(){
-	ArrayUtil src = {(int[]){1,2,3,4,5},sizeof(int),5},dest = create(sizeof(int),5);
-	ArrayUtil tmp = {(int[]){2,3,4,5,6},sizeof(int),5};
-	int hint = 1;
-	map(src,dest,intConvertFunc,&hint);
-	assert(areEqual(dest,tmp)==1);
-	dispose(dest);
-}
-
 void test_map_gives_A_B_C_D_E_for_a_b_c_d_e_for_character_array(){
 	ArrayUtil src = {(char[]){'a','b','c','d','e'},sizeof(char),5},dest = create(sizeof(char),5);
 	ArrayUtil tmp = {(char[]){'A','B','C','D','E'},sizeof(char),5};
@@ -624,206 +911,6 @@ void test_reduce_gives_20_for_1_2_3_4_5_in_same_array(){
 	result = reduce(src,addReducerFunc,&hint,&initval);
 	assertEqual(*((int*)result),20);
 	dispose(src);
-}
-
-void test_areEqual_return_1_when_both_int_array_lenght_base_and_typesize_and_elements_are_same(){
-	int array1[]={1,2,3,4,5};
-	int array2[]={1,2,3,4,5};
-	ArrayUtil u1={array1,INT_SIZE,5};
-	ArrayUtil u2={array2,INT_SIZE,5};
-	assertEqual(areEqual(u1,u2), 1);
-}
-
-void test_areEqual_return_1_when_both_float_array_lenght_base_and_typesize_and_elements_are_same(){
-	float array1[]={1.5,2.5,3.5,4.5,5.5};
-	float array2[]={1.5,2.5,3.5,4.5,5.5};
-	ArrayUtil u1={array1,FLOAT_SIZE,5};
-	ArrayUtil u2={array2,FLOAT_SIZE,5};
-	assertEqual(areEqual(u1,u2), 1);
-}
-
-void test_areEqual_return_0_when_both_float_base_and_typesizeare_same_but_one_has_less_element(){
-	float array1[]={1.5,2.5,3.5,4.5};
-	float array2[]={1.5,2.5,3.5,4.5,5.5};
-	ArrayUtil u1={array1,FLOAT_SIZE,5};
-	ArrayUtil u2={array2,FLOAT_SIZE,5};
-	assertEqual(areEqual(u1,u2), 0);
-}
-
-void test_areEqual_return_0_when_both_float_base_and_typesizeare_same_but_second_has_less_element(){
-	float array1[]={1.5,2.5,3.5,4.5};
-	float array2[]={1.5,2.5,3.5};
-	ArrayUtil u1={array1,FLOAT_SIZE,4};
-	ArrayUtil u2={array2,FLOAT_SIZE,4};
-	assertEqual(areEqual(u1,u2), 0);
-}
-
-void test_areEqual_return_0_when_both_float_array_length_are_different(){
-	float array1[]={1.5,2.5,3.5,4.5};
-	float array2[]={1.5,2.5,3.5};
-	ArrayUtil u1={array1,FLOAT_SIZE,4};
-	ArrayUtil u2={array2,FLOAT_SIZE,3};
-	assertEqual(areEqual(u1,u2), 0);
-}
-
-void test_areEqual_return_0_when_one_is_float_array_and_second_is_int_array_typesize_different(){
-	float array1[]={1.0,2.0,3.0,4.0};
-	int array2[]={1,2,3,4};
-	ArrayUtil u1={array1,FLOAT_SIZE,4};
-	ArrayUtil u2={array2,INT_SIZE,4};
-	assertEqual(areEqual(u1,u2), 0);
-}
-
-void test_areEqual_return_0_when_one_is_float_array_and_second_is_int_array_typesize_same(){
-	float array1[]={1.0,2.0,3.0,4.0};
-	int array2[]={1,2,3,4};
-	ArrayUtil u1={array1,FLOAT_SIZE,4};
-	ArrayUtil u2={array2,FLOAT_SIZE,4};
-	assertEqual(areEqual(u1,u2), 0);
-}
-
-void test_areEqual_return_0_both_have_same_float_array_typesize_different(){
-	float array1[]={1.0,2.0,3.0,4.0};
-	float array2[]={1.0,2.0,3.0,4.0};
-	ArrayUtil u1={array1,FLOAT_SIZE,4};
-	ArrayUtil u2={array2,CHAR_SIZE,4};
-	assertEqual(areEqual(u1,u2), 0);
-}
-
-void test_areEqual_return_1_when_both_doube_array_lenght_base_and_typesize_and_elements_are_same(){
-	double array1[]={1.5,2.5,3.5,4.5,5.5};
-	double array2[]={1.5,2.5,3.5,4.5,5.5};
-	ArrayUtil u1={array1,DOUBLE_SIZE,5};
-	ArrayUtil u2={array2,DOUBLE_SIZE,5};
-	assertEqual(areEqual(u1,u2), 1);
-}
-
-void test_areEqual_return_0_when_both_double_base_and_typesizeare_same_but_one_has_less_element(){
-	double array1[]={1.5,2.5,3.5,4.5};
-	double array2[]={1.5,2.5,3.5,4.5,5.5};
-	ArrayUtil u1={array1,DOUBLE_SIZE,5};
-	ArrayUtil u2={array2,DOUBLE_SIZE,5};
-	assertEqual(areEqual(u1,u2), 0);
-}
-
-void test_areEqual_return_0_when_both_double_base_and_typesizeare_same_but_second_has_less_element(){
-	double array1[]={1.5,2.5,3.5,4.5};
-	double array2[]={1.5,2.5,3.5};
-	ArrayUtil u1={array1,DOUBLE_SIZE,4};
-	ArrayUtil u2={array2,DOUBLE_SIZE,4};
-	assertEqual(areEqual(u1,u2), 0);
-}
-
-void test_areEqual_return_0_when_both_double_array_length_are_different(){
-	double array1[]={1.5,2.5,3.5,4.5};
-	double array2[]={1.5,2.5,3.5};
-	ArrayUtil u1={array1,DOUBLE_SIZE,4};
-	ArrayUtil u2={array2,DOUBLE_SIZE,3};
-	assertEqual(areEqual(u1,u2), 0);
-}
-
-void test_areEqual_return_0_when_one_is_double_array_and_second_is_int_array_typesize_different(){
-	double array1[]={1.0,2.0,3.0,4.0};
-	int array2[]={1,2,3,4};
-	ArrayUtil u1={array1,DOUBLE_SIZE,4};
-	ArrayUtil u2={array2,INT_SIZE,4};
-	assertEqual(areEqual(u1,u2), 0);
-}
-
-void test_areEqual_return_0_when_one_is_int_array_and_second_is_int_array_typesize_same(){
-	double array1[]={1.0,2.0,3.0,4.0};
-	int array2[]={1,2,3,4};
-	ArrayUtil u1={array1,DOUBLE_SIZE,4};
-	ArrayUtil u2={array2,DOUBLE_SIZE,4};
-	assertEqual(areEqual(u1,u2), 0);
-}
-
-void test_areEqual_return_0_both_have_same_double_array_typesize_different(){
-	double array1[]={1.0,2.0,3.0,4.0};
-	double array2[]={1.0,2.0,3.0,4.0};
-	ArrayUtil u1={array1,DOUBLE_SIZE,4};
-	ArrayUtil u2={array2,CHAR_SIZE,4};
-	assertEqual(areEqual(u1,u2), 0);
-}
-
-void test_areEqual_return_1_when_both_characetr_array_lenght_base_and_typesize_and_elements_are_same(){
-	char array1[]={'a','b','c','d','\0'};
-	char array2[]={'a','b','c','d','\0'};
-	ArrayUtil u1={array1,CHAR_SIZE,5};
-	ArrayUtil u2={array2,CHAR_SIZE,5};
-	assertEqual(areEqual(u1,u2), 1);
-}
-
-void test_areEqual_return_0_when_both_characetr_array_lenght_are_same_but_typesize_is_different(){
-	int array1[]={1,2,3,4,5};
-	char array2[]={'a','b','c','d','\0'};
-	ArrayUtil u1={array1,INT_SIZE,5};
-	ArrayUtil u2={array2,CHAR_SIZE,5};
-	assertEqual(areEqual(u1,u2), 0);
-}
-
-void test_areEqual_return_0_when_both_characetr_array_typesize_are_same_but_length_is_different(){
-	char array1[]={'a','b','c','\0'};
-	char array2[]={'a','b','c','d','\0'};
-	ArrayUtil u1={array1,INT_SIZE,4};
-	ArrayUtil u2={array2,CHAR_SIZE,5};
-	assertEqual(areEqual(u1,u2), 0);
-}
-
-void test_areEqual_return_1_for_array_of_string_if_everything_is_same(){
-	STRING array1[]={"abc","abc","abc","abc","abc"};
-	STRING array2[]={"abc","abc","abc","abc","abc"};
-	ArrayUtil u1={array1,STRING_SIZE,5};
-	ArrayUtil u2={array2,STRING_SIZE,5};
-	assertEqual(areEqual(u1,u2), 1);
-}
-
-void test_areEqual_return_0_for_array_of_string_if_lenghts_are_different(){
-	STRING array1[]={"abc","abc","abc","abc","abc"};
-	STRING array2[]={"abc","abc","abc","abc","abc"};
-	ArrayUtil u1={array1,STRING_SIZE,5};
-	ArrayUtil u2={array2,STRING_SIZE,4};
-	assertEqual(areEqual(u1,u2), 0);
-}
-
-void test_areEqual_return_1_when_length_and_typesize_are_same_and_each_ele_is_empty_string(){
-	STRING array1[]={"","","","",""};
-	STRING array2[]={"","","","",""};
-	ArrayUtil u1={array1,STRING_SIZE,5};
-	ArrayUtil u2={array2,STRING_SIZE,5};
-	assertEqual(areEqual(u1,u2), 1);
-}
-
-void test_areEqual_return_0_when_typesize_and_length_are_same_but_first_has_less_element(){
-	STRING array1[]={"","","",""};
-	STRING array2[]={"","","","",""};
-	ArrayUtil u1={array1,STRING_SIZE,5};
-	ArrayUtil u2={array2,STRING_SIZE,5};
-	assertEqual(areEqual(u1,u2), 0);
-}
-
-void test_areEqual_return_0_when_typesize_is_same_but_second_has_less_element_and_less_length(){
-	STRING array1[]={"ank","aks","ank","aks","ank"};
-	STRING array2[]={"ank","aks","ank","aks"};
-	ArrayUtil u1={array1,STRING_SIZE,5};
-	ArrayUtil u2={array2,STRING_SIZE,4};
-	assertEqual(areEqual(u1,u2), 0);
-}
-
-void test_areEqual_return_0_when_1_typesize_is_STRING_SIZE_and_2_is_INT_SIZE(){
-	STRING array1[]={"abc","abc","abc","abc","abc"};
-	int array2[]={1,2,3,4,5};
-	ArrayUtil u1={array1,STRING_SIZE,5};
-	ArrayUtil u2={array2,INT_SIZE,4};
-	assertEqual(areEqual(u1,u2), 0);
-}
-
-void test_areEqual_returns_0_when_lenght_are_not_equal(){
-	int array1[]={1,2,3,4};
-	int array2[]={1,2,3,4,5};
-	ArrayUtil u1={array1,INT_SIZE,4};
-	ArrayUtil u2={array2,INT_SIZE,5};
-	assertEqual(areEqual(u1,u2), 0);
 }
 
 void test_create_creates_a_given_length_array_of_5_elements_initialized_to_0_when_given_length_is_5(){
@@ -1781,77 +1868,6 @@ void test_areEqual_returns_0_when_length_is_equal_but_typeSize_is_not_equal(){
 	assertEqual(areEqual(u1,u2), 0);
 }
 
-void test_create_001(){
-	log("returns an ArrayUtil with bytes initialized to ZERO for int");
-	ArrayUtil util1 = {array_0_0, sizeOf_int, 2};
-	ArrayUtil util2 = create(sizeOf_int, 2);
-	assertEqual(areEqual(util1, util2), YES);
-	dispose(util2);
-}
-
-void test_create_002(){
-	log("returns an ArrayUtil with bytes initialized to NULL for char");
-	ArrayUtil util1 = {array_null_null, sizeOf_char, 2};
-	ArrayUtil util2 = create(sizeOf_char, 2);
-	assertEqual(areEqual(util1, util2), YES);
-	dispose(util2);
-}
-
-void test_create_003(){
-	log("returns an ArrayUtil with bytes initialized to ZERO for float");
-	ArrayUtil util1 = {array_flt_flt, sizeOf_float, 2};
-	ArrayUtil util2 = create(sizeOf_float, 2);
-	assertEqual(areEqual(util1, util2), YES);
-	dispose(util2);
-}
-
-void test_create_004(){
-	log("returns an ArrayUtil with bytes initialized to ZERO for double");
-	ArrayUtil util1 = {array_dble_dble, sizeOf_double, 2};
-	ArrayUtil util2 = create(sizeOf_double, 2);
-	assertEqual(areEqual(util1, util2), YES);
-	dispose(util2);
-}
-
-void test_create_007(){
-	log("returns an ArrayUtil with bytes initialized to ZERO for float[5]");
-	ArrayUtil util1 = {array_float5_0s, sizeOf_float5, 1};
-	ArrayUtil util2 = create(sizeOf_float5, 1);
-	assertEqual(areEqual(util1, util2), YES);
-	dispose(util2);
-}
-
-void test_create_008(){
-	log("returns an ArrayUtil with bytes initialized to ZERO for struct");
-	ArrayUtil util1 = {array_Students, sizeOf_Student, 1};
-	ArrayUtil util2 = create(sizeOf_Student, 1);
-	assertEqual(areEqual(util1, util2), YES);
-	dispose(util2);
-}
-
-void test_create_009(){
-	log("returns an ArrayUtil with bytes initialized to ZERO for void *");
-	ArrayUtil util1 = {array_void_stars, sizeOf_void_star, 1};
-	ArrayUtil util2 = create(sizeOf_void_star, 1);
-	assertEqual(areEqual(util1, util2), YES);
-	dispose(util2);
-}
-
-void test_create_010(){
-	log("returns an ArrayUtil with bytes initialized to ZERO for char *");
-	ArrayUtil util1 = {array_char_stars, sizeOf_char_star, 1};
-	ArrayUtil util2 = create(sizeOf_char_star, 1);
-	assertEqual(areEqual(util1, util2), YES);
-	dispose(util2);
-}
-
-void test_create_011(){
-	log("returns an ArrayUtil with bytes initialized to ZERO for int *");
-	ArrayUtil util1 = {array_int_stars, sizeOf_int_star, 1};
-	ArrayUtil util2 = create(sizeOf_int_star, 1);
-	assertEqual(areEqual(util1, util2), YES);
-	dispose(util2);
-}
 
 void test_forEach_does_multiplication_of_item_with_item_plus_one(){
 	void *hint;
@@ -2122,16 +2138,12 @@ void test_filter_populate_destination_array_until_hits_max_size_and_return_no_el
 	assertEqual((evens[1]),12);    
 }
 
-int is_FloorEven(void* item, void* hint){
-	double* _item = (double*)item;
-	int ceil_item = floor(*_item);
-	return (ceil_item % 2) == 0 ? 1 : 0;
+void test_map_gives_2_3_4_5_6_for_1_2_3_4_5_for_integer_array(){
+	ArrayUtil src = {(int[]){1,2,3,4,5},sizeof(int),5},dest = create(sizeof(int),5);
+	ArrayUtil tmp = {(int[]){2,3,4,5,6},sizeof(int),5};
+	int hint = 1;
+	map(src,dest,intConvertFunc,&hint);
+	assert(areEqual(dest,tmp)==1);
+	dispose(dest);
 }
-void test_count_should_count_matched_element_in_DOUBLE_array(){
-	double array[5] = {99.89,167.88,22.66,36.10,15.47908};
-	double x = 'a';
-	ArrayUtil util = create(sizeof(double),5);
-	util.base = array;
-	assertEqual(count(util,&is_FloorEven,&x),2);
-	dispose(util);
-}
+
