@@ -98,9 +98,8 @@ void dispose(ArrayUtil util) {
 void* findFirst(ArrayUtil util,MatchFunc* f, void* hint) {
 	int i;
 	for(i=0;i<util.length;i++) {
-		if(f(util.base+i*util.typeSize,hint)) {
+		if(f(util.base+i*util.typeSize,hint)) 
 			return &util.base[i*util.typeSize];
-		}
 	}
 	return NULL;
 }
@@ -108,9 +107,8 @@ void* findFirst(ArrayUtil util,MatchFunc* f, void* hint) {
 void* findLast(ArrayUtil util,MatchFunc* f, void* hint) {
 	int i;
 	for(i=util.length*util.typeSize-util.typeSize;i>0;i-=util.typeSize) {
-		if(f(&util.base[i],hint)) {
+		if(f(&util.base[i],hint)) 
 			return &util.base[i];
-		}
 	}
 	return NULL;
 }
@@ -138,25 +136,22 @@ int filter(ArrayUtil util, MatchFunc* f, void* hint, void** destination, int max
 
 void map(ArrayUtil source, ArrayUtil destination, ConvertFunc* convert, void* hint) {
 	int i;
-	for(i=0;i<source.length*source.typeSize;i+=source.typeSize) {
+	for(i=0;i<source.length*source.typeSize;i+=source.typeSize) 
 		convert(hint,&source.base[i],&destination.base[i]);
-	}
 }
 
 
 void forEach(ArrayUtil util, OperationFunc* operation, void* hint) {
 	int i;
-	for(i=0;i<util.length*util.typeSize;i+=util.typeSize) {
+	for(i=0;i<util.length*util.typeSize;i+=util.typeSize) 
 		operation(hint,&util.base[i]);
-	}	
 }
 
 
 void* reduce(ArrayUtil util, ReducerFunc* reducer, void* hint, void* intialValue){
 	int i;
-	for(i=0;i<util.length*util.typeSize;i+=util.typeSize){
+	for(i=0;i<util.length*util.typeSize;i+=util.typeSize)
 		intialValue =  reducer(hint,&util.base[i],intialValue);
-	}
 	return intialValue;
 }
 
