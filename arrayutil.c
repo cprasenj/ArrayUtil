@@ -126,7 +126,7 @@ int filter(ArrayUtil util, MatchFunc* f, void* hint, void** destination, int max
 	int i,count = 0;
 	for(i=0;i<util.length;i++) {
 		if(f(&(util.base)[i*util.typeSize],hint)) {
-			((float*)(*destination))[count] = ((float*)util.base)[i];
+			((float*)*destination)[count] = ((float*)util.base)[i];
 			if(count == maxItems) return count;	
 			count++;
 		}

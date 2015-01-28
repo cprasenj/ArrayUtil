@@ -216,7 +216,8 @@ void test_areEqual_025(){
 	assertEqual(areEqual(u1,u2), 1);
 }
 
-void test_areEqual_return_0_when_both_float_base_and_typesizeare_same_but_one_has_less_element(){
+void test_areEqual_026(){
+	log("areEqual return 0 when both float base and typesizeare same but one has less element");
 	float array1[]={1.5,2.5,3.5,4.5};
 	float array2[]={1.5,2.5,3.5,4.5,5.5};
 	ArrayUtil u1={array1,FLOAT_SIZE,5};
@@ -224,7 +225,8 @@ void test_areEqual_return_0_when_both_float_base_and_typesizeare_same_but_one_ha
 	assertEqual(areEqual(u1,u2), 0);
 }
 
-void test_areEqual_return_0_when_both_float_base_and_typesizeare_same_but_second_has_less_element(){
+void test_areEqual_027(){
+	log("areEqual return 0 when both float base and typesizeare same but second has less element");
 	float array1[]={1.5,2.5,3.5,4.5};
 	float array2[]={1.5,2.5,3.5};
 	ArrayUtil u1={array1,FLOAT_SIZE,4};
@@ -232,7 +234,8 @@ void test_areEqual_return_0_when_both_float_base_and_typesizeare_same_but_second
 	assertEqual(areEqual(u1,u2), 0);
 }
 
-void test_areEqual_return_0_when_both_float_array_length_are_different(){
+void test_areEqual_028(){
+	log("areEqual return 0 when both float array length are different");
 	float array1[]={1.5,2.5,3.5,4.5};
 	float array2[]={1.5,2.5,3.5};
 	ArrayUtil u1={array1,FLOAT_SIZE,4};
@@ -240,7 +243,8 @@ void test_areEqual_return_0_when_both_float_array_length_are_different(){
 	assertEqual(areEqual(u1,u2), 0);
 }
 
-void test_areEqual_return_0_when_one_is_float_array_and_second_is_int_array_typesize_different(){
+void test_areEqual_029(){
+	log("areEqual return 0 when one is float array and second is int array typesize different");
 	float array1[]={1.0,2.0,3.0,4.0};
 	int array2[]={1,2,3,4};
 	ArrayUtil u1={array1,FLOAT_SIZE,4};
@@ -248,7 +252,8 @@ void test_areEqual_return_0_when_one_is_float_array_and_second_is_int_array_type
 	assertEqual(areEqual(u1,u2), 0);
 }
 
-void test_areEqual_return_0_when_one_is_float_array_and_second_is_int_array_typesize_same(){
+void test_areEqual_030(){
+	log("areEqual return 0 when one is float array and second is int array typesize same");
 	float array1[]={1.0,2.0,3.0,4.0};
 	int array2[]={1,2,3,4};
 	ArrayUtil u1={array1,FLOAT_SIZE,4};
@@ -256,7 +261,8 @@ void test_areEqual_return_0_when_one_is_float_array_and_second_is_int_array_type
 	assertEqual(areEqual(u1,u2), 0);
 }
 
-void test_areEqual_return_0_both_have_same_float_array_typesize_different(){
+void test_areEqual_031(){
+	log("areEqual return 0 both have same float array typesize different");
 	float array1[]={1.0,2.0,3.0,4.0};
 	float array2[]={1.0,2.0,3.0,4.0};
 	ArrayUtil u1={array1,FLOAT_SIZE,4};
@@ -264,7 +270,8 @@ void test_areEqual_return_0_both_have_same_float_array_typesize_different(){
 	assertEqual(areEqual(u1,u2), 0);
 }
 
-void test_areEqual_return_1_when_both_doube_array_lenght_base_and_typesize_and_elements_are_same(){
+void test_areEqual_032(){
+	log("areEqual return 1 when both doube array lenght base and typesize and elements are same");
 	double array1[]={1.5,2.5,3.5,4.5,5.5};
 	double array2[]={1.5,2.5,3.5,4.5,5.5};
 	ArrayUtil u1={array1,DOUBLE_SIZE,5};
@@ -272,7 +279,8 @@ void test_areEqual_return_1_when_both_doube_array_lenght_base_and_typesize_and_e
 	assertEqual(areEqual(u1,u2), 1);
 }
 
-void test_areEqual_return_0_when_both_double_base_and_typesizeare_same_but_one_has_less_element(){
+void test_areEqual_033(){
+	log("areEqual return 0 when both double base and typesizeare same but one has less element");
 	double array1[]={1.5,2.5,3.5,4.5};
 	double array2[]={1.5,2.5,3.5,4.5,5.5};
 	ArrayUtil u1={array1,DOUBLE_SIZE,5};
@@ -280,7 +288,8 @@ void test_areEqual_return_0_when_both_double_base_and_typesizeare_same_but_one_h
 	assertEqual(areEqual(u1,u2), 0);
 }
 
-void test_areEqual_return_0_when_both_double_base_and_typesizeare_same_but_second_has_less_element(){
+void test_areEqual_034(){
+	log("areEqual return 0 when both double base and typesizeare same but second has less element");
 	double array1[]={1.5,2.5,3.5,4.5};
 	double array2[]={1.5,2.5,3.5};
 	ArrayUtil u1={array1,DOUBLE_SIZE,4};
@@ -288,7 +297,8 @@ void test_areEqual_return_0_when_both_double_base_and_typesizeare_same_but_secon
 	assertEqual(areEqual(u1,u2), 0);
 }
 
-void test_areEqual_return_0_when_both_double_array_length_are_different(){
+void test_areEqual_035(){
+	log("areEqual return 0 when both double array length are different");
 	double array1[]={1.5,2.5,3.5,4.5};
 	double array2[]={1.5,2.5,3.5};
 	ArrayUtil u1={array1,DOUBLE_SIZE,4};
@@ -296,7 +306,8 @@ void test_areEqual_return_0_when_both_double_array_length_are_different(){
 	assertEqual(areEqual(u1,u2), 0);
 }
 
-void test_areEqual_return_0_when_one_is_double_array_and_second_is_int_array_typesize_different(){
+void test_areEqual_036(){
+	log("areEqual return 0 when one is double array and second is int array typesize different");
 	double array1[]={1.0,2.0,3.0,4.0};
 	int array2[]={1,2,3,4};
 	ArrayUtil u1={array1,DOUBLE_SIZE,4};
@@ -304,7 +315,8 @@ void test_areEqual_return_0_when_one_is_double_array_and_second_is_int_array_typ
 	assertEqual(areEqual(u1,u2), 0);
 }
 
-void test_areEqual_return_0_when_one_is_int_array_and_second_is_int_array_typesize_same(){
+void test_areEqual_037(){
+	log("areEqual return 0 when one is int array and second is int array typesize same");
 	double array1[]={1.0,2.0,3.0,4.0};
 	int array2[]={1,2,3,4};
 	ArrayUtil u1={array1,DOUBLE_SIZE,4};
@@ -312,7 +324,8 @@ void test_areEqual_return_0_when_one_is_int_array_and_second_is_int_array_typesi
 	assertEqual(areEqual(u1,u2), 0);
 }
 
-void test_areEqual_return_0_both_have_same_double_array_typesize_different(){
+void test_areEqual_038(){
+	log("areEqual return 0 both have same double array typesize different");
 	double array1[]={1.0,2.0,3.0,4.0};
 	double array2[]={1.0,2.0,3.0,4.0};
 	ArrayUtil u1={array1,DOUBLE_SIZE,4};
@@ -320,7 +333,8 @@ void test_areEqual_return_0_both_have_same_double_array_typesize_different(){
 	assertEqual(areEqual(u1,u2), 0);
 }
 
-void test_areEqual_return_1_when_both_characetr_array_lenght_base_and_typesize_and_elements_are_same(){
+void test_areEqual_039(){
+	log("areEqual return 1 when both characetr array lenght base and typesize and elements are same");
 	char array1[]={'a','b','c','d','\0'};
 	char array2[]={'a','b','c','d','\0'};
 	ArrayUtil u1={array1,CHAR_SIZE,5};
@@ -328,7 +342,8 @@ void test_areEqual_return_1_when_both_characetr_array_lenght_base_and_typesize_a
 	assertEqual(areEqual(u1,u2), 1);
 }
 
-void test_areEqual_return_0_when_both_characetr_array_lenght_are_same_but_typesize_is_different(){
+void test_areEqual_040(){
+	log("areEqual return 0 when both characetr array lenght are same but typesize is different");
 	int array1[]={1,2,3,4,5};
 	char array2[]={'a','b','c','d','\0'};
 	ArrayUtil u1={array1,INT_SIZE,5};
@@ -336,7 +351,8 @@ void test_areEqual_return_0_when_both_characetr_array_lenght_are_same_but_typesi
 	assertEqual(areEqual(u1,u2), 0);
 }
 
-void test_areEqual_return_0_when_both_characetr_array_typesize_are_same_but_length_is_different(){
+void test_areEqual_041(){
+	log("areEqual return 0 when both characetr array typesize are same but length is different");
 	char array1[]={'a','b','c','\0'};
 	char array2[]={'a','b','c','d','\0'};
 	ArrayUtil u1={array1,INT_SIZE,4};
@@ -344,7 +360,8 @@ void test_areEqual_return_0_when_both_characetr_array_typesize_are_same_but_leng
 	assertEqual(areEqual(u1,u2), 0);
 }
 
-void test_areEqual_return_1_for_array_of_string_if_everything_is_same(){
+void test_areEqual_042(){
+	log("areEqual return 1 for array of string if everything is same");
 	STRING array1[]={"abc","abc","abc","abc","abc"};
 	STRING array2[]={"abc","abc","abc","abc","abc"};
 	ArrayUtil u1={array1,STRING_SIZE,5};
@@ -352,7 +369,8 @@ void test_areEqual_return_1_for_array_of_string_if_everything_is_same(){
 	assertEqual(areEqual(u1,u2), 1);
 }
 
-void test_areEqual_return_0_for_array_of_string_if_lenghts_are_different(){
+void test_areEqual_043(){
+	log("areEqual return 0 for array of string if lenghts are different");
 	STRING array1[]={"abc","abc","abc","abc","abc"};
 	STRING array2[]={"abc","abc","abc","abc","abc"};
 	ArrayUtil u1={array1,STRING_SIZE,5};
@@ -360,7 +378,8 @@ void test_areEqual_return_0_for_array_of_string_if_lenghts_are_different(){
 	assertEqual(areEqual(u1,u2), 0);
 }
 
-void test_areEqual_return_1_when_length_and_typesize_are_same_and_each_ele_is_empty_string(){
+void test_areEqual_044(){
+	log("areEqual return 1 when length and typesize are same and each ele is empty string");
 	STRING array1[]={"","","","",""};
 	STRING array2[]={"","","","",""};
 	ArrayUtil u1={array1,STRING_SIZE,5};
@@ -368,7 +387,8 @@ void test_areEqual_return_1_when_length_and_typesize_are_same_and_each_ele_is_em
 	assertEqual(areEqual(u1,u2), 1);
 }
 
-void test_areEqual_return_0_when_typesize_and_length_are_same_but_first_has_less_element(){
+void test_areEqual_045(){
+	log("areEqual return 0 when typesize and length are same but first has less element");
 	STRING array1[]={"","","",""};
 	STRING array2[]={"","","","",""};
 	ArrayUtil u1={array1,STRING_SIZE,5};
@@ -376,7 +396,8 @@ void test_areEqual_return_0_when_typesize_and_length_are_same_but_first_has_less
 	assertEqual(areEqual(u1,u2), 0);
 }
 
-void test_areEqual_return_0_when_typesize_is_same_but_second_has_less_element_and_less_length(){
+void test_areEqual_046(){
+	log("areEqual return 0 when typesize is same but second has less element and less length");
 	STRING array1[]={"ank","aks","ank","aks","ank"};
 	STRING array2[]={"ank","aks","ank","aks"};
 	ArrayUtil u1={array1,STRING_SIZE,5};
@@ -384,7 +405,8 @@ void test_areEqual_return_0_when_typesize_is_same_but_second_has_less_element_an
 	assertEqual(areEqual(u1,u2), 0);
 }
 
-void test_areEqual_return_0_when_1_typesize_is_STRING_SIZE_and_2_is_INT_SIZE(){
+void test_areEqual_047(){
+	log("areEqual return 0 when 1 typesize is STRING SIZE and 2 is INT SIZE");
 	STRING array1[]={"abc","abc","abc","abc","abc"};
 	int array2[]={1,2,3,4,5};
 	ArrayUtil u1={array1,STRING_SIZE,5};
@@ -392,7 +414,8 @@ void test_areEqual_return_0_when_1_typesize_is_STRING_SIZE_and_2_is_INT_SIZE(){
 	assertEqual(areEqual(u1,u2), 0);
 }
 
-void test_areEqual_returns_0_when_lenght_are_not_equal(){
+void test_areEqual_048(){
+	log("areEqual returns 0 when lenght are not equal");
 	int array1[]={1,2,3,4};
 	int array2[]={1,2,3,4,5};
 	ArrayUtil u1={array1,INT_SIZE,4};
@@ -513,7 +536,7 @@ void test_create_015 () {
     dispose(util2);
 }
 
-void test_should_return_1_when_two_char_type_of_array_are_created_whose_length_are_same () {
+void test_create_should_return_1_when_two_char_type_of_array_are_created_whose_length_are_same () {
     ArrayUtil util1, util2;
     util1 = create(CHAR_SIZE, 2);
     util2 = create(CHAR_SIZE, 2);
